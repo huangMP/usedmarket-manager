@@ -77,7 +77,7 @@
 									<th class="center">支持人数</th>
 									<th class="center">添加人</th>
 									<th class="center">添加时间</th>
-									<th class="center">是否有动态：2，没有；1有</th>
+									<th class="center">是否有动态</th>
 									<th class="center">动态id</th>
 									<th class="center">操作</th>
 								</tr>
@@ -108,8 +108,22 @@
 											<td class='center'>${var.SUPPORT_NUM}</td>
 											<td class='center'>${var.ADD_USER}</td>
 											<td class='center'>${var.ADD_DATE}</td>
-											<td class='center'>${var.HAS_DYNAMICS}</td>
-											<td class='center'>${var.DYNAMICS_ID}</td>
+											<td class='center'>
+												<c:if test="${var.HAS_DYNAMICS == 2}">
+													没有
+												</c:if>
+												<c:if test="${var.HAS_DYNAMICS == 1 }">
+													有
+												</c:if>
+											</td>
+											<td class='center'>
+												<c:if test="${var.DYNAMICS_ID == ''}">
+													不存在
+												</c:if>
+												<c:if test="${var.DYNAMICS_ID != ''}">
+													${var.DYNAMICS_ID}
+												</c:if>
+											</td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
