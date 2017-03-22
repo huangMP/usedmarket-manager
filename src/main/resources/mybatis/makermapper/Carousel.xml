@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.maker.dao.CarouselDao">
+
+    <!--表名 -->
+    <sql id="tableName">
+        t_carousel
+    </sql>
+
+    <!-- 字段 -->
+    <sql id="Field">
+        carousel_id,
+        title,
+        add_user_id,
+        add_date,
+        sort
+    </sql>
+
+    <!-- 别名 -->
+    <sql id="FieldAlias">
+        t_carousel.carousel_id "carouselId",
+        t_carousel.title "title",
+        t_carousel.add_user_id "addUserId",
+        t_carousel.add_date "addDate",
+        t_carousel.sort "sort"
+    </sql>
+
+    <!-- 字段值 -->
+    <sql id="FieldValue">
+        #{carouselId},
+        #{title},
+        #{addUserId},
+        #{addDate},
+        #{sort}
+    </sql>
+
+    <!-- 查找前五条 Carousel -->
+    <select id="selectTop5" resultType="Carousel">
+        SELECT <include refid="FieldAlias"/> , `t_attachment`.`narrow_image_path` imagePath FROM
+        t_carousel INNER JOIN t_attachment ON t_carousel.carousel_id = t_attachment.content_id
+        ORDER BY sort DESC
+        LIMIT 0,5
+    </select>
+
+    <!-- 新增 -->
+    <insert id="insert" parameterType="Carousel">
+        insert into
+          <include refid="tableName"></include>
+        (
+          <include refid="Field"></include>
+        ) values (
+          <include refid="FieldValue"></include>
+        )
+    </insert>
+
+    <!-- 删除 -->
+    <delete id="deleteByCarouselId" parameterType="String">
+        delete from
+        <include refid="tableName"></include>
+        where
+        carousel_id = #{carouselId}
+    </delete>
+
+    <!-- 更新 -->
+    <update id="updateByCarouselId" parameterType="Carousel">
+        UPDATE <include refid="tableName"></include>
+        SET
+        title = #{title},
+        sort = #{sort}
+        WHERE carousel_id=#{carouselId}
+    </update>
+
+</mapper>

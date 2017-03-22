@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.maker.dao.SubjectHeadDao">
+
+    <!--表名 -->
+    <sql id="tableName">
+        t_subject_head
+    </sql>
+
+    <!-- 字段 -->
+    <sql id="Field">
+        subject_head_id,
+        title,
+        add_user,
+        add_date,
+        more_des,
+        type
+    </sql>
+
+    <!-- 别名 -->
+    <sql id="FieldAlias">
+        t_subject_head.subject_head_id "subjectHeadId",
+        t_subject_head.more_des "moreDes",
+        t_subject_head.title "title",
+        t_subject_head.add_user "addUser",
+        t_subject_head.add_date "addDate",
+    </sql>
+
+    <!-- 字段值 -->
+    <sql id="FieldValue">
+        #{subjectHeadId},
+        #{title},
+        #{addUser},
+        #{addDate},
+        #{moreDes},
+        #{type}
+    </sql>
+
+    <!-- 查找前五条 Carousel -->
+    <select id="selectAll" resultType="SubjectHead">
+        SELECT
+        <include refid="FieldAlias"></include>
+        FROM <include refid="tableName"></include>
+    </select>
+
+    <!-- 新增 -->
+    <insert id="insert" parameterType="SubjectHead">
+        insert into
+          <include refid="tableName"></include>
+        (
+          <include refid="Field"></include>
+        ) values (
+          <include refid="FieldValue"></include>
+        )
+    </insert>
+
+    <!-- 删除 -->
+    <delete id="deleteBySubjectHeadId" parameterType="String">
+        delete from
+        <include refid="tableName"></include>
+        where
+        subject_head_id = #{subjectHeadId}
+    </delete>
+
+    <!-- 更新 -->
+    <update id="updateBySubjectHeadId" parameterType="SubjectHead">
+        UPDATE <include refid="tableName"></include>
+        SET
+        more_des = #{moreDes},
+        title = #{title},
+        type = #{type}
+        WHERE subject_head_id=#{subjectHeadId}
+    </update>
+
+</mapper>

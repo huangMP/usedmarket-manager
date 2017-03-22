@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ChapterMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		TR_CHAPTER
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		SPECIAL_ID,	
+		TITLE,	
+		SORT,
+		ADD_USER,	
+		ADD_TIME,	
+		CHAPTER_ID
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{SPECIAL_ID},	
+		#{TITLE},	
+		#{SORT},	
+		#{ADD_USER},	
+		#{ADD_TIME},	
+		#{CHAPTER_ID}
+	</sql>
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into 
+	<include refid="tableName"></include>
+		(
+	<include refid="Field"></include>
+		) values (
+	<include refid="FieldValue"></include>
+		)
+	</insert>
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			CHAPTER_ID = #{CHAPTER_ID}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+			SPECIAL_ID = #{SPECIAL_ID},
+			TITLE = #{TITLE},
+			SORT = #{SORT},
+			ADD_USER = #{ADD_USER},
+			ADD_TIME = #{ADD_TIME},
+		CHAPTER_ID = CHAPTER_ID
+		where 
+		CHAPTER_ID = #{CHAPTER_ID}
+	</update>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 
+			CHAPTER_ID = #{CHAPTER_ID}
+	</select>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findBySpecialId" parameterType="pd" resultType="pd">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 
+			SPECIAL_ID = #{SPECIAL_ID}
+	</select>
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 1=1
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			and SPECIAL_ID =  #{pd.keywords} ORDER BY SORT DESC
+		</if>
+		<if test="pd.keywords == null or pd.keywords == ''">
+			ORDER BY ADD_TIME DESC
+		</if>
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+	</select>
+	
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			CHAPTER_ID in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+	<!-- 通过CHAPTER_ID得到TITLE -->
+	<select id="selectTitleById" parameterType="String" resultType="String">
+		select TITLE from
+		<include refid="tableName"></include>
+		where 
+			CHAPTER_ID = #{CHAPTER_ID}
+	</select>
+	 
+	 <!-- 通过SpecialId数组查找 -->
+	<select id="findBySpecialIdArray" parameterType="String" resultType="pd">
+		select 
+		<include refid="Field"></include> 
+		from
+		<include refid="tableName"></include>
+		where 
+			SPECIAL_ID in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</select>
+	 
+	 <!-- 通过SpecialId获取Chapters-->
+	<select id="findChaptersBySpecialId" parameterType="pd" resultType="pd">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 
+			SPECIAL_ID = #{SPECIAL_ID}
+		ORDER BY SORT DESC
+	</select>
+	 
+</mapper>

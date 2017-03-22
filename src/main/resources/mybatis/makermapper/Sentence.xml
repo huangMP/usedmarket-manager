@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.maker.dao.SentenceDao">
+
+    <!--表名 -->
+    <sql id="tableName">
+        t_sentence
+    </sql>
+
+    <!-- 字段 -->
+    <sql id="Field">
+        sentence_id,
+        text,
+        type,
+        add_user,
+        add_date
+    </sql>
+
+    <!-- 字段值 -->
+    <sql id="FieldValue">
+        #{sentenceId},
+        #{text},
+        #{type},
+        #{addUser},
+        #{addDate}
+    </sql>
+
+    <!-- 别名 -->
+    <sql id="FieldAlias">
+        t_sentence.sentence_id "sentenceId",
+        t_sentence.text "text",
+        t_sentence.type "type",
+        t_sentence.add_user "addUser",
+        t_sentence.add_date "addDate",
+    </sql>
+
+    <!-- 通过 SentenceQueryCondition 查找 Sentence -->
+    <select id="selectSentencesByCondition" parameterType="SentenceQueryCondition" resultType="SentenceBean">
+        SELECT
+        <include refid="FieldAlias"/>
+        FROM <include refid="tableName"></include>
+        WHERE type = #{type}
+        LIMIT ${index}, ${num}
+    </select>
+
+    <!-- 新增 -->
+    <insert id="insert" parameterType="SentenceBean">
+        insert into
+          <include refid="tableName"></include>
+        (
+          <include refid="Field"></include>
+        ) values (
+          <include refid="FieldValue"></include>
+        )
+    </insert>
+
+    <!-- 删除 -->
+    <delete id="deleteBySentenceId" parameterType="String">
+        delete from
+        <include refid="tableName"></include>
+        where
+        sentence_id = #{sentenceId}
+    </delete>
+
+    <!-- 更新 -->
+    <update id="updateBySentenceId" parameterType="SentenceBean">
+        UPDATE <include refid="tableName"></include>
+        SET
+        text = #{text},
+        type = #{type}
+        WHERE sentence_id=#{sentenceId}
+    </update>
+    
+    <select id="selectNumByType" parameterType="Integer" resultType="Integer">
+        SELECT COUNT(*) `count` FROM t_sentence WHERE `type` = #{type}
+    </select>
+
+</mapper>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.maker.dao.MakerRoleDao">
+
+    <!--表名 -->
+    <sql id="tableName">
+        t_role
+    </sql>
+
+    <!-- 字段 -->
+    <sql id="Field">
+        role_id,
+        role_name,
+        role_real_name,
+        status
+    </sql>
+
+    <!-- 字段值 -->
+    <sql id="FieldValue">
+        #{roleId},
+        #{roleName},
+        #{roleRealName},
+        #{status}
+    </sql>
+
+    <!-- 别名 -->
+    <sql id="FieldAlias">
+        t_role.role_id "roleId",
+        t_role.role_name "roleName",
+        t_role.role_real_name "roleRealName",
+        t_role.status "status"
+    </sql>
+
+    <!-- 查找 -->
+    <select id="findByRoleId" resultType="Role">
+        SELECT
+        <include refid="FieldAlias"/>
+        FROM
+        <include refid="tableName"></include>
+        WHERE role_id=#{roleId}
+    </select>
+
+    <!-- 通过status查找 -->
+    <select id="findByStatus" resultType="Role">
+        SELECT
+        <include refid="FieldAlias"/>
+        FROM
+        <include refid="tableName"></include>
+        WHERE status=#{status}
+    </select>
+
+    <!-- 通过roleName查找 -->
+    <select id="findByRoleName" resultType="Role">
+        SELECT
+        <include refid="FieldAlias"></include>
+        FROM
+        <include refid="tableName"></include>
+        WHERE role_name=#{roleName}
+    </select>
+
+    <!-- 新增-->
+    <insert id="insert" parameterType="UserInfo">
+        insert into
+          <include refid="tableName"></include>
+        (
+          <include refid="Field"></include>
+        ) values (
+          <include refid="FieldValue"></include>
+        )
+    </insert>
+
+    <!-- 删除-->
+    <delete id="delete" parameterType="String">
+        delete from
+          <include refid="tableName"></include>
+        where
+        role_id = #{roleId}
+    </delete>
+
+    <update id="update" parameterType="UserInfo">
+        UPDATE <include refid="tableName"></include>
+        SET
+        role_name=#{roleName},
+        role_real_name=#{roleRealName},
+        status=#{status}
+        WHERE role_id=#{roleId}
+    </update>
+
+    <!--按条件查找-->
+    <select id="findByQueryCondition" resultType="Role" parameterType="QueryCondition">
+        SELECT
+        <include refid="FieldAlias"/>
+        FROM
+        <include refid="tableName"></include>
+        WHERE 1=1
+        <if test="type != null and type != '' and type != 'all' ">
+            AND `t_role`.${type} = #{queryValue}
+        </if>
+        <if test="secondType != null and secondType != ''  and secondType != 'all' ">
+            AND `t_role`.${secondType} = #{secondQueryValue}
+        </if>
+        <if test="secondType != null and secondType != '' and secondType != 'all' ">
+            AND `t_role`.`title` like CONCAT(CONCAT('%', #{indistinctField}),'%')
+        </if>
+        <if test="orderBy != null and orderBy != '' ">
+             ORDER BY ${orderBy} ${order}
+        </if>
+        LIMIT ${index},${size}
+    </select>
+</mapper>

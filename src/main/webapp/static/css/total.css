@@ -1,0 +1,215 @@
+ul,li,a,div,span,html, body,h2{
+    margin: 0;
+    padding: 0;
+}
+body {
+    line-height: 1;
+    background: url(../image/background.jpg);
+    background-size: cover;
+    min-width: 1024px;
+}
+.clear{
+    clear: both;
+    height: 0;
+}
+
+.hide{
+    display: none;
+}
+
+
+ul li{
+    list-style: none;
+}
+.head{
+    background-image: url(../image/top2/top_bag2.jpg);
+    background-size: 100%;
+}
+.top_text{
+    position: absolute;
+    left: -470px;
+    top: 45px;
+    animation:mymove 2s ease;
+    -webkit-animation:mymove 2s ease; 
+}
+
+@keyframes mymove
+{
+    from {top: 0px;opacity: 0}
+    to {top: 45px;opacity: 1}
+}
+
+@-webkit-keyframes mymove 
+{
+    from {top: 0px;opacity: 0}
+    to {top: 45px;opacity: 1}
+}
+.top_box{
+    overflow: hidden;
+    width:1024px;
+    margin:0 auto;
+}
+.top_page{
+    height: 230px;
+    /* overflow: hidden; */
+    width: 555px;
+    margin: 0 auto;
+    position: relative;
+    left: 245px;
+}
+.img2>li{
+    float: left;
+}
+.img2>li>img{
+    width: 555px;
+}
+.img2{
+    width: 5000px;
+    position: absolute;  /*初始化位置*/
+    top: 0;
+    left: 0;
+
+}
+/*导航栏*/
+.address{
+    background-color: #6bcaf1;
+    background: -moz-linear-gradient(rgb(92,206,221),rgb(92,160,221));
+    background: -webkit-linear-gradient(rgb(92,206,221),rgb(92,160,221));
+    background: -o-linear-gradient(rgb(92,206,221),rgb(92,160,221));
+    background: -ms-linear-gradient(rgb(92,206,221),rgb(92,160,221));
+    background: linear-gradient(rgb(92, 206, 221),rgb(92,160,221));
+    text-shadow: 1px 1px 10px #979797;
+    min-width: 1024px;
+}
+
+.top_nav{
+    list-style: none;
+    margin:0 auto;
+    width: 1024px;
+}
+.top_nav>li{
+    float: left;
+    width: 112px;
+    height: 40px;
+    line-height: 40px;
+}
+.aline{
+    text-decoration: none;
+    color: #2d2d2d;
+    width: 100%;
+    margin: 0 auto;
+    display: block;
+    font-weight: bold;
+    text-align: center;
+    font-family: "微软雅黑","华文细黑";
+}
+/*二级菜单*/
+.aline2{
+    text-decoration: none;
+    text-align: center;
+    color: aliceblue;
+    padding: 3px 13px;
+    font-size: 14px;
+    display:inline-block;
+    width: 98px;
+    margin: 0;
+    border-radius: 6px;
+    box-shadow: 1px 2px 5px #979797;
+    text-shadow: 1px 2px 5px #979797;
+    background: #58b4c2;
+    background: -webkit-linear-gradient(#58b4c2, #4296b0); /* Safari 5.1 - 6.0 */
+    background: -moz-linear-gradient(#58b4c2, #4296b0); /* Firefox 3.6 - 15 */
+    background: linear-gradient(#58b4c2, #4296b0); /* 标准的语法 */
+}
+
+.next_nav{
+    z-index: 800;
+    zoom: 1;
+    list-style: none;
+    margin: 0 auto;
+    width: 105px;
+    line-height: 30px;
+    position: relative;
+    left: -11px;
+    display: none;
+}
+
+.top_nav>li:hover{
+    background: #5cbfce;
+}
+.top_nav>li:hover .aline{
+    color: #ffd109;
+}
+.top_nav>li:hover .next_nav{
+    display: block;
+}
+.next_nav>li:hover .aline2{
+    background: #3daaff;
+    /*color: #ffd109;*/
+}
+.aline2_ie_hov{
+    background: #3daaff;
+}
+.att{
+    height: 2px;
+    width: 112px;
+    background: #dfdfdf;
+    margin: 0 auto;
+    margin-left: 5px;
+    opacity: 0;
+}
+/*导航位置条*/
+.local{
+    margin: 10px auto 0;
+    height: 35px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    background:rgba(112, 188, 189, 0.69);
+    background: -webkit-linear-gradient(rgba(112, 188, 189, 0.69), #49b4ce);
+    background: -o-linear-gradient(rgba(112, 188, 189, 0.69), #49b4ce);
+    background: -moz-linear-gradient(rgba(112, 188, 189, 0.69), #49b4ce);
+    background: linear-gradient(rgba(112, 188, 189, 0.69), #49b4ce);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#70BCBD', endColorstr='#49b4ce',GradientType=0 );
+}
+:root .local{filter:none;}
+
+.local>span{
+    font-size: 14px;
+    font-family: "宋体","微软雅黑","华文细黑";
+    padding-left: 25px;
+    line-height: 35px;
+}
+.local>span>a{
+    text-decoration: none;
+    color: #3a3a3a;
+}
+.local>span>a:hover{
+    color: #ffd109;
+    font-weight: bold;
+}
+.local_a>a{
+    text-decoration: none;
+    color: #3a3a3a;
+}
+.local_a>a:hover{
+    color: #ffd109;
+    font-weight: bold;
+}
+
+/*底部*/
+.line3{
+    height: 2px;
+    background: #58b4c2;
+    box-shadow:1px 1px 6px #58b4c2;
+    margin-top: 4px;
+}
+.mess_down{
+    width: 1024px;
+    margin: 17px auto;
+    height: 60px;
+}
+.mess_down>span{
+    display: block;
+    padding: 5px;
+    text-align: center;
+}

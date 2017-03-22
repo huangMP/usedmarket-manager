@@ -1,0 +1,145 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.hide{
+   display: none;
+}
+
+html{
+    overflow: hidden;
+    background-color: rgba(111, 202, 255, 0.2);
+}
+
+body{
+    background:url("../image/singin.jpg");
+    padding-bottom: 500%;
+}
+
+.sign_in{
+    border-radius: 5px;
+    padding-top: 15px;
+    position: absolute;
+    left: 50%;
+    margin-left: -250px;
+    top: 50%;
+    margin-top: -160px;
+    width: 455px;
+    height: 305px;
+    background-color: #eee;
+    background-color: rgba(255,255,255,0.6);
+    box-shadow: 1px 2px 15px #555;
+}
+
+.sign_in>span{
+    margin-left: 15px;
+    padding: 10px 5px;
+    font-size: 24px;
+    font-family: "幼圆","华文彩云";
+    color: #555;
+    line-height: 35px;
+    border-bottom: 2px solid #BBB;
+    text-shadow: 1px 2px 5px #979797;
+}
+
+.sign_input{
+    position: relative;
+    margin-top: 25px;
+}
+
+#use_name{
+    width: 336px;
+    height: 36px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    position: absolute;
+    left: 60px;
+    top: 15px;
+}
+
+#use_pass{
+    width: 336px;
+    height: 36px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    position: absolute;
+    left: 60px;
+    top: 80px;
+}
+
+#use_name>img,
+#use_pass>img{
+    width: 24px;
+    height: 24px;
+    padding: 6px;
+    background-color: #eee;
+    position: absolute;
+    line-height: 35px;
+    left: 0;
+    top: 0;
+    border-radius: 4px 0 0 4px;
+}
+
+#use_pass>input,
+#use_name>input{
+    border: 0;
+    line-height: 36px;
+    position: absolute;
+    padding-left: 10px;
+    width: 300px;
+    height: 36px;
+    left: 36px;
+    top: 0;
+    border-radius: 0 4px 4px 0;
+}
+
+.btn{
+	cursor: pointer;
+    left: 85px;
+    top: 234px;
+    position: absolute;
+    border-radius: 5px;
+    border: 0;
+    font-size: 18px;
+    line-height: 35px;
+    height: 35px;
+    width: 298px;
+    background-color: #6bcaf1;
+    background: -moz-linear-gradient(#acdddc,#5CA0DD);
+    background: -webkit-linear-gradient(#acdddc,#5CA0DD);
+    background: -o-linear-gradient(#acdddc,#5CA0DD);
+    background: -ms-linear-gradient(#acdddc,#5CA0DD);
+    background: linear-gradient(#acdddc,#5CA0DD);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#acdddc', endColorstr='#5CA0DD',GradientType=0 );
+    text-shadow: 1px 2px 5px #979797;
+}
+:root .btn{filter:none;}
+
+.tooltip{
+    border-radius: 5px;
+    font-family: "微软雅黑";
+    letter-spacing: 5px;
+    text-align: center;
+    position: relative;
+    color: red;
+    z-index: 100;
+    margin: 0 auto;
+    margin-top: 156px;
+    width: 200px;
+    height: 25px;
+    font-size: 14px;
+    background-color: #ddfcff;
+    line-height: 25px;
+    box-shadow: 1px 2px 5px #979797;
+}
+
+.tooltip>span{
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-top-color: #ddfcff;
+    left: 50%;
+    margin-left: -3px;
+}

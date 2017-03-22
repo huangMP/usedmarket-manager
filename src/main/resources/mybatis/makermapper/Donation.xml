@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.maker.dao.DonationDao">
+
+    <!--表名 -->
+    <sql id="tableName">
+        t_donation
+    </sql>
+
+    <!-- 字段 -->
+    <sql id="Field">
+        donation_id,
+        user_id,
+        donation_name,
+        category,
+        amount,
+        location,
+        description,
+        donation_date,
+        status,
+        phone
+    </sql>
+
+    <!-- 字段值 -->
+    <sql id="FieldValue">
+        #{donationId},
+        #{userId},
+        #{donationName},
+        #{category},
+        #{amount},
+        #{location},
+        #{description},
+        #{donationDate},
+        #{status},
+        #{phone}
+    </sql>
+
+    <!-- 别名 -->
+    <sql id="FieldAlias">
+        t_donation.donation_id "donationId",
+        t_donation.user_id "userId",
+        t_donation.donation_name "donationName",
+        t_donation.category "category",
+        t_donation.amount "amount",
+        t_donation.location "location",
+        t_donation.description "description",
+        t_donation.donation_date "donationDate",
+        t_donation.status "status",
+        t_donation.phone "phone"
+    </sql>
+
+    <!-- 通过 donationId 查找 DonationCustom-->
+    <select id="findDonationCustomByDonationId" resultType="DonationCustom">
+        <include refid="findDonationSql"/>
+        WHERE donation_Id=#{donationId}
+    </select>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="Donation">
+        UPDATE <include refid="tableName"></include>
+        SET
+        user_id=#{userId},
+        donation_name=#{donationName},
+        category=#{category},
+        amount=#{amount},
+        location=#{location},
+        description=#{description},
+        donation_date=#{donationDate},
+        status=#{status},
+        phone=#{phone}
+        WHERE donation_id=#{donationId}
+    </update>
+
+    <!-- 新增-->
+    <insert id="insert" parameterType="Donation">
+        insert into
+          <include refid="tableName"></include>
+        (
+          <include refid="Field"></include>
+        ) values (
+          <include refid="FieldValue"></include>
+        )
+    </insert>
+
+    <sql id="findDonationSql">
+        SELECT
+          <include refid="FieldAlias"/>,
+          `t_user_info`.`username` `username`,
+          `t_attachment`.`narrow_image_path` `headPortrait`
+        FROM (`t_donation` INNER JOIN `t_user_info` ON `t_donation`.`user_id` = `t_user_info`.`user_id`)
+        INNER JOIN `t_attachment` ON `t_donation`.`user_id` = `t_attachment`.`content_id`
+    </sql>
+
+    <select id="findByQueryCondition" resultType="DonationCustom" parameterType="QueryCondition">
+        <include refid="findDonationSql"/>
+        WHERE 1=1
+        <if test="type != null and type != '' and type != 'all' ">
+            AND <include refid="tableName"/>.${type} = #{queryValue}
+        </if>
+        <if test="secondType != null and secondType != '' and secondType != 'all' ">
+            AND <include refid="tableName"/>.${secondType} = #{secondQueryValue}
+        </if>
+        <if test="secondType != null and secondType != '' and secondType != 'all' ">
+            AND <include refid="tableName"/>.donation_name like CONCAT(CONCAT('%', #{indistinctField}),'%')
+        </if>
+        <if test="orderBy != null and orderBy != '' ">
+            ORDER BY ${orderBy} ${order}
+        </if>
+        LIMIT ${index},${size}
+    </select>
+
+    <!-- 根据传入的id，读取相应的图片 -->
+    <select id="loadImages" parameterType="DonationCustom" resultType="Attachment" >
+        SELECT t_attachment.attachment_id "attachmentId",
+        t_attachment.content_id "contentId",
+        t_attachment.file_path "filePath",
+        t_attachment.narrow_image_path "narrowImagePath",
+        t_attachment.file_type "fileType"
+        FROM `t_attachment`
+        WHERE `t_attachment`.content_id IN
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item.donationId}
+        </foreach>
+    </select>
+
+</mapper>

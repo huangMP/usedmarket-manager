@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.maker.dao.CrowdfundingDao">
+
+    <!--表名 -->
+    <sql id="tableName">
+        t_crowdfunding
+    </sql>
+
+    <!-- 字段 -->
+    <sql id="Field">
+        crowdfunding_id,
+        crowdfunding_type,
+        images,
+        title,
+        description,
+        origin,
+        target_amount,
+        now_amount,
+        support_num,
+        add_user,
+        add_date,
+        has_dynamics,
+        dynamics_id
+    </sql>
+
+    <!-- 字段值 -->
+    <sql id="FieldValue">
+        #{crowdfundingId},
+        #{crowdfundingType},
+        #{images},
+        #{title},
+        #{description},
+        #{origin},
+        #{targetAmount},
+        #{nowAmount},
+        #{supportNum},
+        #{addUser},
+        #{addDate}
+        #{hasDynamics},
+        #{dynamicsId}
+    </sql>
+
+    <!-- 别名 -->
+    <sql id="FieldAlias">
+        t_crowdfunding.crowdfunding_id "crowdfundingId",
+        t_crowdfunding.crowdfunding_type "crowdfundingType",
+        t_crowdfunding.title "title",
+        t_crowdfunding.description "description",
+        t_crowdfunding.origin "origin",
+        t_crowdfunding.target_amount "targetAmount",
+        t_crowdfunding.now_amount "nowAmount",
+        t_crowdfunding.support_num "supportNum",
+        t_crowdfunding.add_user "addUser",
+        t_crowdfunding.add_date "addDate",
+        t_crowdfunding.has_dynamics "hasDynamics",
+        t_crowdfunding.dynamics_id "dynamicsId"
+    </sql>
+
+
+    <!-- 通过 crowdfundingId 查找 Crowdfunding -->
+    <select id="findByCrowdfundingId" resultType="Crowdfunding">
+        SELECT * FROM
+        <include refid="tableName"></include>
+        WHERE crowdfunding_id=#{crowdfundingId}
+    </select>
+
+    <!-- 新增-->
+    <insert id="insert" parameterType="Crowdfunding">
+        insert into
+          <include refid="tableName"></include>
+        (
+          <include refid="Field"></include>
+        ) values (
+          <include refid="FieldValue"></include>
+        )
+    </insert>
+
+    <!-- 删除-->
+    <delete id="delete" parameterType="String">
+        delete from
+          <include refid="tableName"></include>
+        where
+        crowdfunding_id = #{crowdfundingId}
+    </delete>
+
+    <!-- 通过 addUser 查找 Crowdfunding -->
+    <select id="findByaddUser" resultType="Crowdfunding">
+        SELECT
+        <include refid="FieldAlias"/>
+        FROM
+          <include refid="tableName"></include>
+        WHERE add_user=#{addUser}
+    </select>
+
+    <update id="update" parameterType="Crowdfunding">
+        UPDATE <include refid="tableName"></include>
+        SET
+        crowdfunding_type=#{crowdfundingType},
+        images=#{images},
+        title=#{title},
+        description=#{description},
+        origin=#{origin},
+        target_amount=#{targetAmount},
+        now_amount=#{nowAmount},
+        support_num=#{supportNum},
+        add_user=#{addUser},
+        add_date=#{addDate},
+        has_dynamics=#{hasDynamics},
+        dynamics_id=#{dynamicsId}
+        WHERE crowdfunding_id=#{crowdfundingId}
+    </update>
+
+
+    <sql id="findSql">
+        SELECT
+        <include refid="FieldAlias"/>,
+        `t_user_info`.`username` `username`,
+        `t_attachment`.`narrow_image_path` `headPortrait`
+        FROM (`t_crowdfunding` INNER JOIN `t_user_info` ON `t_crowdfunding`.`add_user` = `t_user_info`.`user_id`)
+        INNER JOIN `t_attachment` ON `t_crowdfunding`.`add_user` = `t_attachment`.`content_id`
+    </sql>
+
+    <!-- 按要求查找 -->
+    <select id="findByQueryCondition" resultType="CrowdfundingCustom" parameterType="QueryCondition">
+        <include refid="findSql"/>
+        WHERE 1=1
+        <if test="type != null and type != '' and type != 'all' ">
+            AND <include refid="tableName"/>.${type} = #{queryValue}
+        </if>
+        <if test="secondType != null and secondType != '' and secondType != 'all'  ">
+            AND <include refid="tableName"/>.${secondType} = #{secondQueryValue}
+        </if>
+        <if test="indistinctField != null and indistinctField != '' ">
+            AND <include refid="tableName"/>.`title` like CONCAT(CONCAT('%', #{indistinctField}),'%')
+        </if>
+        <if test="orderBy != null and orderBy != '' ">
+            ORDER BY ${orderBy} ${order}
+        </if>
+        LIMIT ${index},${size}
+
+    </select>
+    <!-- 根据传入的id，读取相应的图片 -->
+    <select id="loadImages" parameterType="CrowdfundingCustom" resultType="Attachment" >
+        SELECT *
+        FROM `t_attachment`
+        WHERE `t_attachment`.content_id IN
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item.crowdfundingId}
+        </foreach>
+    </select>
+
+</mapper>

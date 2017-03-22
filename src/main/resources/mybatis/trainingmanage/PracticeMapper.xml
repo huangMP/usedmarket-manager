@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PracticeMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		TR_PRACTICE
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		CHAPTER_ID,	
+		FILE_PATH,	
+		ANSWER_PATH,	
+		ADD_USER,	
+		ADD_TIME,	
+		PRACTICE_ID,
+		CHOICE_NUM
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{CHAPTER_ID},	
+		#{FILE_PATH},	
+		#{ANSWER_PATH},	
+		#{ADD_USER},	
+		#{ADD_TIME},	
+		#{PRACTICE_ID},	
+		#{CHOICE_NUM}
+	</sql>
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into 
+	<include refid="tableName"></include>
+		(
+	<include refid="Field"></include>
+		) values (
+	<include refid="FieldValue"></include>
+		)
+	</insert>
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			PRACTICE_ID = #{PRACTICE_ID}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+			CHAPTER_ID = #{CHAPTER_ID},
+			FILE_PATH = #{FILE_PATH},
+			ANSWER_PATH = #{ANSWER_PATH},
+			ADD_USER = #{ADD_USER},
+			ADD_TIME = #{ADD_TIME},
+			
+			CHOICE_NUM = #{CHOICE_NUM},
+			
+		PRACTICE_ID = PRACTICE_ID
+		where 
+		PRACTICE_ID = #{PRACTICE_ID}
+	</update>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 
+			PRACTICE_ID = #{PRACTICE_ID}
+	</select>
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 1=1
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			and CHAPTER_ID = #{pd.keywords} ORDER BY ADD_TIME DESC
+		</if>
+		<if test="pd.keywords == null or pd.keywords == ''">
+			ORDER BY ADD_TIME DESC
+		</if>
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			PRACTICE_ID in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+	<!-- liangzhilin -->
+	
+	<!-- 通过CHAPTER_ID获取数据 -->
+	<select id="findByCHAPTER_ID" parameterType="String" resultType="pd">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 
+			CHAPTER_ID = #{CHAPTER_ID}
+	</select>
+	
+	<!-- 删除-->
+	<delete id="deleteByCHAPTER_ID" parameterType="String">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			CHAPTER_ID = #{CHAPTER_ID}
+	</delete>
+	
+	<!-- 通过ChapterId数组查找 -->
+	<select id="findByChapterIdArray" parameterType="String" resultType="pd">
+		select 
+		<include refid="Field"></include> 
+		from
+		<include refid="tableName"></include>
+		where 
+			CHAPTER_ID in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</select>
+	
+	<select id="findByChapterId" parameterType="pd" resultType="pd">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 
+			CHAPTER_ID = #{CHAPTER_ID}
+	</select>
+
+</mapper>

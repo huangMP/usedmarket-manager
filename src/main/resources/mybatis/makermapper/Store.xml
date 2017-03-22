@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.maker.dao.StoreDao">
+
+    <!--表名 -->
+    <sql id="tableName">
+        t_store
+    </sql>
+
+    <!-- 字段 -->
+    <sql id="Field">
+        store_id,
+        store_name,
+        user_id,
+        description,
+        prefer_num,
+        sales_volume,
+        registration_date,
+        add_user
+    </sql>
+
+    <!-- 字段值 -->
+    <sql id="FieldValue">
+        #{storeId},
+        #{storeName},
+        #{userId},
+        #{description},
+        #{preferNum},
+        #{salesVolume},
+        #{registrationDate},
+        #{addUser}
+    </sql>
+
+    <!-- 别名 -->
+    <sql id="FieldAlias">
+        t_store.store_id "storeId",
+        t_store.store_name "storeName",
+        t_store.user_id "userId",
+        t_store.description "description",
+        t_store.prefer_num "preferNum",
+        t_store.sales_volume "salesVolume",
+        t_store.registration_date "registrationDate",
+        t_store.add_user "addUser"
+    </sql>
+
+    <!-- 新增-->
+    <insert id="insert" parameterType="Store">
+        insert into
+        <include refid="tableName"></include>
+        (
+        <include refid="Field"></include>
+        ) values (
+        <include refid="FieldValue"></include>
+        )
+    </insert>
+
+    <sql id="findSql">
+        SELECT
+        <include refid="FieldAlias"></include>,
+        t_attachment.file_path "picturePath",
+        t_attachment.narrow_image_path "narrowPicturePath"
+        FROM t_store INNER JOIN t_attachment ON t_store.store_id=t_attachment.content_id
+    </sql>
+
+    <!-- 查找所有 -->
+    <select id="findAll" resultType="StoreCustom">
+        SELECT
+        <include refid="FieldAlias"></include>,
+        t_attachment.file_path "picturePath",
+        t_attachment.narrow_image_path "narrowPicturePath"
+        FROM t_store INNER JOIN t_attachment ON t_store.store_id=t_attachment.content_id
+        WHERE 1=1
+    </select>
+
+    <select id="findByQueryCondition" parameterType="QueryCondition" resultType="StoreCustom">
+        <include refid="findSql"/>
+        WHERE 1=1
+        <if test="type != null and type != '' and type != 'all' ">
+            AND <include refid="tableName"/>.${type} = #{queryValue}
+        </if>
+        <if test="secondType != null and secondType != '' and secondType != 'all'  ">
+            AND <include refid="tableName"/>.${secondType} = #{secondQueryValue}
+        </if>
+        <if test="indistinctField != null and indistinctField != '' ">
+            AND <include refid="tableName"/>.`title` like CONCAT(CONCAT('%', #{indistinctField}),'%')
+        </if>
+        <if test="orderBy != null and orderBy != '' ">
+            ORDER BY ${orderBy} ${order}
+        </if>
+        LIMIT ${index},${size}
+    </select>
+
+</mapper>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.maker.dao.CommentDao">
+
+    <!--表名 -->
+    <sql id="tableName">
+        t_comment
+    </sql>
+
+    <!-- 字段 -->
+    <sql id="Field">
+        comment_id,
+        commodity_id,
+        crowdfunding_id,
+        comment_text,
+        comment_date,
+        user_id,
+        comment_location
+    </sql>
+
+    <!-- 别名 -->
+    <sql id="FieldAlias">
+        t_comment.comment_id "commentId",
+        t_comment.commodity_id "commodityId",
+        t_comment.crowdfunding_id "crowdfundingId",
+        t_comment.comment_text "commentText",
+        t_comment.comment_date "commentDate",
+        t_comment.user_id "userId",
+        t_comment.comment_location "commentLocation"
+    </sql>
+
+    <!-- 字段值 -->
+    <sql id="FieldValue">
+        #{commentId},
+        #{commodityId},
+        #{crowdfundingId},
+        #{commentText},
+        #{commentDate},
+        #{userId},
+        #{commentLocation}
+    </sql>
+
+    <!-- 通过商品id找对应的评论 -->
+    <select id="findCommentsByCommodityIds" resultMap="loadCommentMap" parameterType="CommodityCustom">
+        SELECT <include refid="FieldAlias"/>, `t_user_info`.`username` "username", `t_attachment`.`narrow_image_path` "headPortrait"
+        FROM (`t_comment` INNER JOIN `t_user_info` ON `t_comment`.`user_id` = `t_user_info`.`user_id`)
+        INNER JOIN `t_attachment` ON `t_user_info`.`user_id` = `t_attachment`.`content_id`
+        WHERE commodity_id IN
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item.commodityId}
+        </foreach>
+        ORDER BY comment_date DESC
+    </select>
+
+    <resultMap id="loadCommentMap" type="CommodityCustom">
+        <id column="commodityId" property="commodityId"/>
+        <collection property="comments" javaType="java.util.List" ofType="CommentCustom" autoMapping="true">
+            <!--<result property="commentId" column="commentId"/>-->
+            <!--<result property="crowdfundingId" column="crowdfundingId"/>-->
+            <!--<result property="commentText" column="commentText"/>-->
+            <!--<result property="commentDate" column="commentDate"/>-->
+            <!--<result property="userId" column="userId"/>-->
+            <!--<result property="username" column="username"/>-->
+            <!--<result property="headPortrait" column="headPortrait"/>-->
+            <!--<result property="commentLocation" column="commentLocation"/>-->
+        </collection>
+    </resultMap>
+
+    <!-- 通过 commentId 查找 Comment -->
+    <select id="findByCommentId" resultType="Comment">
+        SELECT
+        <include refid="FieldAlias"/>
+        FROM
+        <include refid="tableName"></include>
+        WHERE comment_id=#{commentId}
+    </select>
+
+    <!-- 新增-->
+    <insert id="insert" parameterType="Comment">
+        insert into
+          <include refid="tableName"></include>
+        (
+          <include refid="Field"></include>
+        ) values (
+          <include refid="FieldValue"></include>
+        )
+    </insert>
+
+    <delete id="deleteByCommentId" parameterType="Comment">
+        delete from
+          <include refid="tableName"></include>
+        where
+        comment_id = #{commentId}
+    </delete>
+
+    <delete id="deleteByCommodityId" parameterType="Comment">
+        delete from
+        <include refid="tableName"></include>
+        where
+        commodity_id = #{commodityId}
+    </delete>
+
+    <delete id="deleteByCrowdfundingId" parameterType="Comment">
+        delete from
+        <include refid="tableName"></include>
+        where
+        crowdfunding_id = #{crowdfundingId}
+    </delete>
+
+    <update id="update" parameterType="Comment">
+        UPDATE <include refid="tableName"></include>
+        SET
+        comment_id=#{commentId},
+        commodity_id=#{commodityId},
+        crowdfunding_id=#{crowdfundingId},
+        comment_text=#{commentText},
+        comment_date=#{commentDate},
+        user_id=#{userId},
+        comment_location=#{commentLocation}
+        WHERE comment_id=#{commentId}
+    </update>
+
+    <!-- 通过 commodityId 查找 Comment -->
+    <select id="findByCommodityId" resultType="CommentCustom">
+        SELECT <include refid="FieldAlias"/>, `t_user_info`.`username` "username", `t_attachment`.`narrow_image_path` "headPortrait"
+        FROM (`t_comment` INNER JOIN `t_user_info` ON `t_comment`.`user_id` = `t_user_info`.`user_id`)
+        INNER JOIN `t_attachment` ON `t_user_info`.`user_id` = `t_attachment`.`content_id`
+        WHERE `commodity_id` = #{commodityId}
+        ORDER BY comment_date DESC
+    </select>
+
+    <!-- 通过 crowdfundingId 查找 Comment -->
+    <select id="findByCrowdfundingId" resultType="Comment">
+        SELECT
+        <include refid="FieldAlias"/>
+        FROM
+        <include refid="tableName"></include>
+        WHERE crowdfunding_id=#{crowdfundingId}
+    </select>
+</mapper>

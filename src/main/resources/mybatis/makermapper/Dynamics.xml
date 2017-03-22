@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.maker.dao.DynamicsDao">
+
+    <!--表名 -->
+    <sql id="tableName">
+        t_dynamics
+    </sql>
+
+    <!-- 字段 -->
+    <sql id="Field">
+        dynamics_id,
+        type,
+        title,
+        text,
+        pure_text,
+        origin,
+        add_user,
+        add_date,
+        sort
+    </sql>
+
+    <!-- 字段值 -->
+    <sql id="FieldValue">
+        #{dynamicsId},
+        #{type},
+        #{title},
+        #{text},
+        #{pureText},
+        #{origin},
+        #{addUser},
+        #{addDate},
+        #{sort}
+    </sql>
+
+    <!-- 别名 -->
+    <sql id="FieldAlias">
+        <include refid="tableName"/>.dynamics_id "dynamicsId",
+        <include refid="tableName"/>.type "type",
+        <include refid="tableName"/>.title "title",
+        <include refid="tableName"/>.text "text",
+        <include refid="tableName"/>.pure_text "pureText",
+        <include refid="tableName"/>.origin "origin",
+        <include refid="tableName"/>.add_user "addUser",
+        <include refid="tableName"/>.add_date "addDate",
+        <include refid="tableName"/>.sort "sort"
+    </sql>
+
+    <!-- 新增-->
+    <insert id="insert" parameterType="Dynamics">
+        insert into
+        <include refid="tableName"></include>
+        (
+        <include refid="Field"></include>
+        ) values (
+        <include refid="FieldValue"></include>
+        )
+    </insert>
+
+    <!-- 查找 -->
+    <select id="findByDynamicsId" resultType="Dynamics">
+        SELECT
+          <include refid="FieldAlias"></include>
+        FROM
+        <include refid="tableName"></include>
+        WHERE dynamics_id=#{dynamicsId}
+    </select>
+
+    <sql id="findDynamicsSql">
+        SELECT
+        <include refid="FieldAlias"/>
+        FROM <include refid="tableName"/>
+    </sql>
+    <!-- 按要求查找 1.校园动态 2.捐赠动态-->
+    <select id="findDynamicsByQueryCondition" resultMap="loadImagesByContentId" parameterType="QueryCondition">
+        <include refid="findDynamicsSql"/>
+        WHERE 1=1
+        <if test="type != null and type != '' and type != 'all' ">
+            AND <include refid="tableName"/>.${type} = #{queryValue}
+        </if>
+        <if test="secondType != null and secondType != '' and secondType != 'all' ">
+            AND <include refid="tableName"/>.${secondType} = #{secondQueryValue}
+        </if>
+        <if test="secondType != null and secondType != '' and secondType != 'all' ">
+            AND <include refid="tableName"/>.`title` like CONCAT(CONCAT('%', #{indistinctField}),'%')
+        </if>
+        <if test="orderBy != null and orderBy != '' ">
+            ORDER BY ${orderBy} ${order}
+        </if>
+        LIMIT ${index},${size}
+    </select>
+
+    <resultMap id="loadImagesByContentId" type="DynamicsCustom" autoMapping="true">
+        <id column="dynamicsId" property="dynamicsId"/>
+        <collection property="images" javaType="ArrayList" ofType="Attachment" autoMapping="true" column="dynamicsId" select="com.usedmarket.dao.AttachmentDao.findByContentId">
+            <id column="attachment_id" property="attachmentId"/>
+        </collection>
+    </resultMap>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="Donation">
+        UPDATE <include refid="tableName"></include>
+        SET
+        type=#{type},
+        title=#{title},
+        text=#{text},
+        pure_text=#{pureText},
+        origin=#{origin},
+        add_user=#{addUser},
+        add_date=#{addDate},
+        sort=#{sort}
+        WHERE dynamics_id=#{dynamicsId}
+    </update>
+
+</mapper>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.maker.dao.CommodityCategoryDao">
+
+    <!--表名 -->
+    <sql id="tableName">
+        t_commodity_category
+    </sql>
+
+    <!-- 字段 -->
+    <sql id="Field">
+        commodity_category_id,
+        attachment_id,
+        type,
+        sort,
+        title,
+        add_user_id,
+        add_date
+    </sql>
+
+    <!-- 字段值 -->
+    <sql id="FieldValue">
+        #{commodityCategoryId},
+        #{attachmentId},
+        #{type},
+        #{sort},
+        #{title},
+        #{addUserId},
+        #{addDate}
+    </sql>
+
+    <!-- 别名 -->
+    <sql id="FieldAlias">
+        t_commodity_category.commodity_category_id "commodityCategoryId",
+        t_commodity_category.attachment_id "attachmentId",
+        t_commodity_category.type "type",
+        t_commodity_category.sort "sort",
+        t_commodity_category.title "title",
+        t_commodity_category.add_user_id "addUserId",
+        t_commodity_category.add_date "addDate"
+    </sql>
+
+    <!-- 查找 -->
+    <select id="findByCommodityCategoryId" resultType="CommodityCategory">
+        SELECT * FROM
+        <include refid="tableName"></include>
+        WHERE commodity_category_id=#{commodityCategoryId}
+    </select>
+
+    <select id="findCommodityCategoryCustomByCommodityCategoryId" resultType="CommodityCategoryCustom">
+        SELECT
+        <include refid="FieldAlias"></include>,
+        t_attachment.file_path "picturePath",
+        t_attachment.narrow_image_path "narrowPicturePath"
+        FROM t_commodity_category INNER JOIN t_attachment ON t_commodity_category.attachment_id=t_attachment.attachment_id
+        WHERE commodity_category_id=#{commodityCategoryId}
+    </select>
+
+    <!-- 新增-->
+    <insert id="insert" parameterType="CommodityCategory">
+        insert into
+          <include refid="tableName"></include>
+        (
+          <include refid="Field"></include>
+        ) values (
+          <include refid="FieldValue"></include>
+        )
+    </insert>
+
+    <!-- 删除-->
+    <delete id="delete" parameterType="String">
+        delete from
+          <include refid="tableName"></include>
+        where
+        commodity_category_id = #{commodityCategoryId}
+    </delete>
+
+    <!-- 查找所有 -->
+    <select id="findAll" resultType="CommodityCategoryCustom">
+        SELECT
+        <include refid="FieldAlias"></include>,
+        t_attachment.file_path "picturePath",
+        t_attachment.narrow_image_path "narrowPicturePath"
+        FROM t_commodity_category INNER JOIN t_attachment ON t_commodity_category.attachment_id=t_attachment.attachment_id
+        WHERE 1=1
+        ORDER BY t_commodity_category.sort DESC
+    </select>
+
+    <update id="update" parameterType="CommodityCategory">
+        UPDATE <include refid="tableName"></include>
+        SET
+        attachment_id=#{attachmentId},
+        title=#{title},
+        type=#{type},
+        sort=#{sort},
+        add_user_id=#{addUserId},
+        add_date=#{addDate}
+        WHERE commodity_category_id=#{commodityCategoryId}
+    </update>
+
+
+    <select id="findByQueryCondition" resultType="CommodityCategoryCustom" parameterType="QueryCondition">
+        SELECT
+        <include refid="FieldAlias"></include>,
+        t_attachment.file_path "picturePath",
+        t_attachment.narrow_image_path "narrowPicturePath"
+        FROM t_commodity_category INNER JOIN t_attachment ON t_commodity_category.attachment_id=t_attachment.attachment_id
+        WHERE 1=1
+        <if test="type != null and type != '' and type != 'all' ">
+            AND `t_commodity_category`.${type} = #{queryValue}
+        </if>
+        <if test="secondType != null and secondType != '' and secondType != 'all' ">
+            AND `t_commodity_category`.${secondType} = #{secondQueryValue}
+        </if>
+        <if test="indistinctField != null and indistinctField != '' ">
+            AND `t_commodity_category`.`title` like CONCAT(CONCAT('%', #{indistinctField}),'%')
+        </if>
+        <if test="orderBy != null and orderBy != '' ">
+            ORDER BY ${orderBy} ${order}
+        </if>
+        LIMIT ${index},${size}
+    </select>
+
+</mapper>

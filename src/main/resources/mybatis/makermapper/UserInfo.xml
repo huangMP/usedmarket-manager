@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.maker.dao.UserInfoDao">
+
+    <!--表名 -->
+    <sql id="tableName">
+        t_user_info
+    </sql>
+
+    <!-- 字段 -->
+    <sql id="Field">
+        user_id,
+        username,
+        password,
+        phone,
+        sex,
+        attachment_id,
+        year_of_birth,
+        ID_num,
+        real_name,
+        registration_date,
+        school,
+        shipping_address,
+        constellation,
+        blood_type,
+        signature,
+        role_Id
+    </sql>
+
+    <!-- 字段值 -->
+    <sql id="FieldValue">
+        #{userId},
+        #{username},
+        #{password},
+        #{phone},
+        #{sex},
+        #{attachmentId},
+        #{yearOfBirth},
+        #{IDNum},
+        #{realName},
+        #{registrationDate},
+        #{school},
+        #{shippingAddress},
+        #{constellation},
+        #{bloodType},
+        #{signature},
+        #{roleId}
+    </sql>
+
+    <!-- 别名 -->
+    <sql id="FieldAlias">
+        t_user_info.user_id "userId",
+        t_user_info.username "username",
+        t_user_info.password "password",
+        t_user_info.phone "phone",
+        t_user_info.sex "sex",
+        t_user_info.attachment_id "attachmentId",
+        t_user_info.year_of_birth "yearOfBirth",
+        t_user_info.ID_num "IDNum",
+        t_user_info.real_name "realName",
+        t_user_info.registration_date "registrationDate",
+        t_user_info.school "school",
+        t_user_info.shipping_address "shippingAddress",
+        t_user_info.constellation "constellation",
+        t_user_info.blood_type "bloodType",
+        t_user_info.signature "signature",
+        t_user_info.role_id "roleId"
+    </sql>
+
+    <!-- 查找 -->
+    <select id="findByUserId" resultType="UserInfo">
+        SELECT
+        <include refid="FieldAlias"></include>
+        FROM
+        <include refid="tableName"></include>
+        WHERE user_id=#{userId}
+    </select>
+
+    <resultMap id="UICMap" type="UserInfoCustom" autoMapping="true">
+        <id property="userId" column="userId"/>
+        <result property="headPortraitPath" column="filePath"/>
+        <result property="narrowHeadPortraitPath" column="narrowImagePath"/>
+        <result property="roleName" column="roleName"/>
+    </resultMap>
+
+    <!-- 查找 UserInfoCustom By userId -->
+    <select id="findUserInfoCustomByUserId" resultMap="UICMap" parameterType="String">
+        SELECT
+        t_attachment.file_path "filePath",
+        t_attachment.narrow_image_path "narrowImagePath",
+        t_role.role_name "roleName",
+        <include refid="FieldAlias"></include>
+        FROM
+        (t_user_info INNER JOIN t_attachment ON t_user_info.attachment_id=t_attachment.attachment_id)
+        INNER JOIN t_role ON t_user_info.role_id=t_role.role_id
+        WHERE user_id=#{userId}
+    </select>
+
+    <!-- 查找 UserInfoCustom -->
+    <select id="findUserInfoCustomByUsername" resultMap="UICMap" parameterType="String">
+        SELECT
+        t_attachment.file_path "filePath",
+        t_attachment.narrow_image_path "narrowImagePath",
+        t_role.role_name "roleName",
+        <include refid="FieldAlias"></include>
+        FROM
+        (t_user_info INNER JOIN t_attachment ON t_user_info.attachment_id=t_attachment.attachment_id)
+        INNER JOIN t_role ON t_user_info.role_id=t_role.role_id
+        WHERE username=#{username}
+    </select>
+
+    <!-- 新增-->
+    <insert id="insert" parameterType="UserInfo">
+        insert into
+          <include refid="tableName"></include>
+        (
+          <include refid="Field"></include>
+        ) values (
+          <include refid="FieldValue"></include>
+        )
+    </insert>
+
+    <!-- 删除-->
+    <delete id="delete" parameterType="String">
+        delete from
+          <include refid="tableName"></include>
+        where
+          user_id = #{userId}
+    </delete>
+
+    <!-- 通过 Username 查找 UserInfo -->
+    <select id="findByUsername" resultType="UserInfo">
+        SELECT
+        <include refid="FieldAlias"></include>
+        FROM
+          <include refid="tableName"></include>
+        WHERE username=#{username}
+    </select>
+
+    <update id="update" parameterType="UserInfo">
+        UPDATE <include refid="tableName"></include>
+        SET
+        username=#{username},
+        password=#{password},
+        phone=#{phone},
+        sex=#{sex},
+        attachment_id=#{attachmentId},
+        year_of_birth=#{yearOfBirth},
+        ID_num=#{IDNum},
+        real_name=#{realName},
+        registration_date=#{registrationDate},
+        school=#{school},
+        shipping_address=#{shippingAddress},
+        blood_type=#{bloodType},
+        constellation=#{constellation},
+        signature=#{signature},
+        role_Id=#{roleId}
+        WHERE user_id=#{userId}
+    </update>
+
+
+    <select id="findByQueryCondition" resultType="UserInfoCustom" parameterType="QueryCondition">
+        SELECT
+        <include refid="FieldAlias"></include>,
+        t_attachment.file_path "picturePath",
+        t_attachment.narrow_image_path "narrowPicturePath",
+        t_role.role_name "roleName"
+        FROM (t_user_info INNER JOIN t_attachment ON t_user_info.user_id=t_attachment.content_id)
+        INNER JOIN t_role ON t_user_info.role_id=t_role.role_id
+        WHERE 1=1
+        <if test="type != null and type != '' and type != 'all' ">
+        AND `t_user_info`.${type} = #{queryValue}
+    </if>
+        <if test="secondType != null and secondType != '' and secondType != 'all' ">
+            AND `t_user_info`.${secondType} = #{secondQueryValue}
+        </if>
+        <if test="indistinctField != null and indistinctField != '' ">
+            AND `t_user_info`.`title` like CONCAT(CONCAT('%', #{indistinctField}),'%')
+        </if>
+        <if test="orderBy != null and orderBy != '' ">
+            ORDER BY ${orderBy} ${order}
+        </if>
+        LIMIT ${index},${size}
+    </select>
+
+</mapper>

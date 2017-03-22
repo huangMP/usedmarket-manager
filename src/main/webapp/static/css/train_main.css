@@ -1,0 +1,121 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.head{
+    width: 100%;
+    position: fixed;
+    left: 0;
+}
+
+/*广告图片*/
+.ad{
+    border-radius: 5px;
+    background-color: rgba(222, 240, 240,0.4);
+    margin: 0 auto;
+    width: 1024px;
+    height: 500px;
+    overflow: hidden;
+    position: relative;
+    z-index: -3;
+}
+
+.ad>.ad_img{
+    z-index: -3;
+    position: absolute;
+    left: 0;
+    top: 80px;
+}
+
+.ad>.ad_img>img{
+    border-radius: 5px;
+    border: 0;
+    float: left;
+    width: 1024px;
+    height: 500px;
+}
+/*展览*/
+.exhibition{
+    margin: 0 auto;
+    margin-top: 10px;
+    width: 1024px;
+    height: 355px;
+}
+
+.exhibition>p{
+    font-family: "幼圆", "华文彩云";
+    padding-left: 10px;
+    width: 1014px;
+    font-size: 20px;
+    line-height: 35px;
+    height: 35px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    background-color: #51a2dd;
+    background: -moz-linear-gradient(#51a2dd, #498fdd);
+    background: -webkit-linear-gradient(#51a2dd, #498fdd);
+    background: -o-linear-gradient(#51a2dd, #498fdd);
+    background: -ms-linear-gradient(#51a2dd, #498fdd);
+    background: linear-gradient(#51a2dd, #498fdd);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#51a2dd', endColorstr='#498fdd',GradientType=0 );
+    text-shadow: 1px 2px 5px #979797;
+}
+:root .exhibition>p{filter:none;}
+
+.exhibition>p>img{
+    padding: 5px 10px;
+    float: left;
+    width: 25px;
+    height: 25px;
+}
+
+.ex_list{
+    border-radius: 8px;
+    padding: 20px 24px;
+    width: 970px;
+    height: 255px;
+    border: 3px double #ccc;
+}
+
+.ex_list>li{
+    text-align: center;
+    width: 222px;
+    float: left;
+    list-style: none;
+    margin-left: 25px;
+}
+
+.ex_list>li:first-child{
+    margin: 0;
+}
+
+.ex_list>li>a>img{
+    margin-bottom: 10px;
+    border: 0;
+    width: 220px;
+    height: 220px;
+}
+
+.ex_list>li:hover>a>img{
+	border:1px solid #34ffd8;
+	width: 218px;
+    height: 218px;
+}
+
+.list_test{
+    color: black;
+    display: block;
+    padding: 5px 5px 0 5px;
+    line-height: 18px;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.ex_list>li:hover>.list_test{
+    color: #92aedd;
+}
+
+.content{
+	margin-bottom:100px;
+}

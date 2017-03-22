@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.maker.dao.CommodityDao">
+
+    <!--表名 -->
+    <sql id="tableName">
+        t_commodity
+    </sql>
+
+    <!-- 字段 -->
+    <sql id="Field">
+        commodity_id,
+        user_id,
+        store_id,
+        commodity_name,
+        category,
+        price,
+        amount,
+        description,
+        location,
+        prefer_num,
+        launch_date,
+        sales_volume,
+        status
+    </sql>
+
+    <!-- 别名 -->
+    <sql id="FieldAlias">
+        t_commodity.commodity_id "commodityId",
+        t_commodity.user_id "userId",
+        t_commodity.store_id "storeId",
+        t_commodity.commodity_name "commodityName",
+        t_commodity.category "category",
+        t_commodity.price "price",
+        t_commodity.amount "amount",
+        t_commodity.description "description",
+        t_commodity.location "location",
+        t_commodity.prefer_num "preferNum",
+        t_commodity.launch_date "launchDate",
+        t_commodity.sales_volume "salesVolume",
+        t_commodity.status "status"
+    </sql>
+
+    <!-- 字段值 -->
+    <sql id="FieldValue">
+        #{commodityId},
+        #{userId},
+        #{storeId},
+        #{commodityName},
+        #{category},
+        #{price},
+        #{amount},
+        #{description},
+        #{location},
+        #{preferNum},
+        #{launchDate},
+        #{salesVolume},
+        #{status}
+    </sql>
+
+    <sql id="findCommoditySql">
+        SELECT <include refid="FieldAlias"/>, `t_user_info`.`username`, `t_attachment`.`narrow_image_path` `headPortrait`
+        FROM (`t_commodity` INNER JOIN `t_user_info` ON `t_commodity`.`user_id` = `t_user_info`.`user_id`)
+        INNER JOIN `t_attachment` ON `t_commodity`.`user_id` = `t_attachment`.`content_id`
+    </sql>
+
+    <!--
+        <resultMap id="findCommodityMap" type="CommodityCustom" autoMapping="true">
+            <id property="commodityId" column="commodity_id"/>
+            <collection property="images" javaType="java.util.List" ofType="java.lang.String">
+                <result column="narrow_image_path"/>
+            </collection>
+        </resultMap>
+        连接三个表做查询
+        SELECT `t_commodity`.*,`t`.`username`,t.`narrow_image_path` `head_portrait`, `t_attachment`.`narrow_image_path`
+        , count(*) commodityNum
+        FROM (`t_commodity` INNER JOIN
+	          ( SELECT `narrow_image_path`,`user_id`,`username` FROM `t_attachment` INNER JOIN `t_user_info` ON `t_attachment`.`content_id` = `t_user_info`.`user_id`) t
+	    ON `t_commodity`.`user_id` = `t`.`user_id`)
+        LEFT JOIN `t_attachment` ON `t_commodity`.`commodity_id` = `t_attachment`.`content_id`
+     -->
+
+
+
+    <!-- 新增-->
+    <insert id="insert" parameterType="Commodity">
+        insert into
+        <include refid="tableName"></include>
+        (
+        <include refid="Field"></include>
+        ) values (
+        <include refid="FieldValue"></include>
+        )
+    </insert>
+
+    <!-- 删除-->
+    <delete id="deleteByCommodityId" parameterType="String">
+        delete from
+        <include refid="tableName"></include>
+        where
+        commodity_id = #{commodityId}
+    </delete>
+
+    <!-- 通过 CommodityId 查找 Commodity -->
+    <select id="findByCommodityId" resultType="Commodity">
+        SELECT
+        <include refid="FieldAlias"/>
+        FROM
+        <include refid="tableName"></include>
+        WHERE commodity_id=#{commodityId}
+    </select>
+
+    <!-- 数量、销量、收藏人数、价格、状态 -->
+    <update id="updateNumByCommodityId" parameterType="Commodity">
+        UPDATE
+        <include refid="tableName"></include>
+        <set>
+            <if test="amount != null">
+                amount = #{amount},
+            </if>
+            <if test="salesVolume != null">
+                sales_volume = #{salesVolume},
+            </if>
+            <if test="preferNum != null ">
+                prefer_num = #{preferNum},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+        </set>
+        WHERE commodity_id=#{commodityId}
+    </update>
+
+    <!-- 通过种类查找商品 -->
+    <select id="findCommodityByQueryCondition" resultType="CommodityCustom" parameterType="CommodityQueryCondition" >
+        <include refid="findCommoditySql"/>
+        WHERE 1=1
+        <choose>
+            <when test="type == 'all'"/>
+
+            <when test="type == 'hobby'">
+                AND `commodity_name`
+                LIKE CONCAT(CONCAT('%', #{queryValue}),'%')
+                OR `description` LIKE CONCAT(CONCAT('%', #{queryValue}),'%')
+            </when>
+
+            <when test="type == 'workOff'">
+                AND t_commodity.commodity_id IN (
+                  SELECT commodity_id FROM t_order_detail WHERE seller_id = #{queryValue} AND t_order_detail.`status` = 2
+                )
+            </when>
+
+            <when test="type == 'collection'">
+                AND t_commodity.commodity_id IN (
+                  SELECT commodity_id FROM t_collection WHERE user_id = #{queryValue}
+                )
+            </when>
+
+            <otherwise>
+                AND ${type} = #{queryValue}
+            </otherwise>
+        </choose>
+        <if test="indistinctField != null and indistinctField != '' ">
+            AND commodity_name like CONCAT(CONCAT('%', #{indistinctField}),'%')
+        </if>
+        ORDER BY ${orderBy} ${order}
+        LIMIT ${index},10
+    </select>
+
+    <!-- 读取图片的map -->
+    <resultMap id="loadImagesMap" type="ImageCustom">
+        <id column="content_id" property="commodityId"/>
+        <collection property="images" javaType="java.util.List" ofType="java.lang.String" >
+            <result column="narrow_image_path" property="narrowImagePath"/>
+        </collection>
+    </resultMap>
+
+    <!-- 根据传入的id，读取相应的图片 -->
+    <select id="loadImages" parameterType="CommodityCustom" resultMap="loadImagesMap" >
+        SELECT `t_attachment`.`narrow_image_path`, `t_attachment`.`content_id`
+        FROM `t_attachment`
+        WHERE content_id IN
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item.commodityId}
+        </foreach>
+    </select>
+
+</mapper>

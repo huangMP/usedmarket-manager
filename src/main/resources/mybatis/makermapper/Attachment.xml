@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.maker.dao.AttachmentDao">
+
+    <!--表名 -->
+    <sql id="tableName">
+        t_attachment
+    </sql>
+
+    <!-- 字段 -->
+    <sql id="Field">
+        attachment_id,
+        content_id,
+        file_path,
+        narrow_image_path,
+        file_type
+    </sql>
+
+    <!-- 别名 -->
+    <sql id="FieldAlias">
+        t_attachment.attachment_id "attachmentId",
+        t_attachment.content_id "contentId",
+        t_attachment.file_path "filePath",
+        t_attachment.narrow_image_path "narrowImagePath",
+        t_attachment.file_type "fileType"
+    </sql>
+
+    <!-- 字段值 -->
+    <sql id="FieldValue">
+        #{attachmentId},
+        #{contentId},
+        #{filePath},
+        #{narrowImagePath},
+        #{fileType}
+    </sql>
+
+    <!-- 通过 attachmentId 查找 Attachment -->
+    <select id="findByAttachmentId" resultType="Attachment">
+        SELECT
+        <include refid="FieldAlias"/>
+        FROM
+        <include refid="tableName"></include>
+        WHERE attachment_id=#{attachmentId}
+    </select>
+
+    <!-- 查找 -->
+    <select id="findByContentId" resultType="Attachment">
+        SELECT
+        <include refid="FieldAlias"/>
+        FROM
+        <include refid="tableName"></include>
+        WHERE content_id=#{contentId}
+    </select>
+
+    <!-- 新增-->
+    <insert id="insert" parameterType="UserInfo">
+        insert into
+        <include refid="tableName"></include>
+        (
+        <include refid="Field"></include>
+        ) values (
+        <include refid="FieldValue"></include>
+        )
+    </insert>
+
+    <!-- 删除-->
+    <delete id="delete" parameterType="String">
+        delete from
+        <include refid="tableName"></include>
+        where
+        attachment_id = #{attachmentId}
+    </delete>
+
+    <delete id="deleteByContentId" parameterType="String">
+        delete from
+        <include refid="tableName"></include>
+        where
+        content_id = #{contentId}
+    </delete>
+
+    <update id="update" parameterType="Attachment">
+        UPDATE
+        <include refid="tableName"></include>
+        SET
+        attachment_id = #{attachmentId},
+        content_id = #{contentId},
+        file_path = #{filePath},
+        narrow_image_path = #{narrowImagePath},
+        file_type = #{fileType}
+        where
+        attachment_id = #{attachmentId}
+    </update>
+
+</mapper>

@@ -1,0 +1,270 @@
+body{
+    background: #f5f5f5;
+}
+.clear{
+    clear: both;
+    margin: 0;
+    padding: 0;
+    height: 0;
+}
+.hide{
+    display: none;
+}
+.fl{
+    float: left;
+}
+/*导航栏*/
+.head{
+    padding: 0px;
+    margin: 0px;
+    height: 80px;
+    border-bottom: 1px solid #ececec;
+    background: #fff;
+}
+.nav_top{
+    width: 1000px;
+    /*background: cadetblue;*/
+    margin: 0 auto;
+    height: 80px;
+    line-height: 80px;
+    font-family: Verdana, "Lantinghei SC", "Hiragino Sans GB", "Microsoft Yahei"
+}
+.head_img{
+    height: 70px;
+    margin-bottom: 5px;
+}
+.nav_top>nav{
+    height: 80px;
+    display: inline-block;
+    margin-left: 110px;
+}
+.header_nav{
+    position: relative;
+}
+.header_nav>li{
+    position: relative;
+    font-size: 15px;
+    display: inline-block;
+    /*margin-right: 50px;*/
+    padding: 0 25px;
+    cursor: pointer;
+    height: 80px;
+    float: left;
+}
+.header_nav>li>a{
+    text-decoration: none;
+    color: dimgrey;
+}
+.header_nav>li:hover a{
+    color: #35B558;
+}
+.header_nav>li:hover a>i{
+    border-color: #35B558;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+
+    transition:  transform 0.5s ease;
+    -moz-transition:  transform 0.5s ease;
+    -webkit-transition:  transform 0.5s ease;
+    -o-transition: transform 0.5s ease;
+}
+.arrow-icon{
+    width: 8px;
+    height: 8px;
+    border-top: 1px solid #c1c1c1;
+    border-left: 1px solid #c1c1c1;
+    display: inline-block;
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+    -moz-transform: rotate(-135deg);
+    -ms-transform: rotate(-135deg);
+    transform-origin: 4px 4px;
+
+}
+.header_nav>li>a>span{
+    margin-right: 4px;
+}
+.second_nav{
+    position: absolute;
+    left: 0;
+    top: 80px;
+    width: 120px;
+    text-align: center;
+    background: white;
+    line-height: 55px;
+    display: none;
+    cursor: pointer;
+}
+.second_nav>span{
+    color: #8a8a8a;
+    display: block;
+}
+
+.second_nav>span:hover{
+    color: #35B558;
+    background: #fcfcfc;
+    border-bottom: 1px solid  #35B558;
+}
+.lab_col{
+    color: #35B558;
+}
+
+/*用户操作*/
+
+
+/*修改密码*/
+.chgPassword{
+	padding-top:10px;
+    z-index: 300;
+    border-radius: 5px;
+    position: fixed;
+    left: 50%;
+    margin-left: -220px;
+    top: 50%;
+    margin-top: -160px;
+    width: 440px;
+    height: 330px;
+    background-color: #eee;
+    background-color: rgba(255,255,255,0.6);
+    box-shadow: 1px 2px 15px #555;
+}
+
+.exit{
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: 405px;
+    top: 15px;
+    cursor: pointer;
+}
+
+.chgPassword>span{
+	position: absolute;
+    left: 15px;
+    top: 5px;
+    padding: 10px 5px;
+    font-size: 24px;
+    font-family: "幼圆","华文彩云";
+    font-weight: bold;
+    color: #fff;
+    line-height: 35px;
+    border-bottom: 3px solid #34ffd8;
+    text-shadow: 1px 2px 5px #979797;
+}
+
+.chg_input{
+    position: relative;
+    margin-top: 10px
+}
+
+#old_Pass,
+#new_Pass,
+#re_Pass {
+    width: 336px;
+    height: 36px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    position: absolute;
+    left: 50px;
+}
+
+#old_Pass{
+    top: 65px;
+}
+
+#new_Pass{
+    top: 125px;
+}
+
+#re_Pass{
+    top: 185px;
+}
+
+#old_Pass>p,
+#new_Pass>p,
+#re_Pass>p{
+    border-radius: 4px 0 0 4px;
+    line-height: 36px;
+    height: 36px;
+    background: #dfffff;
+    padding: 0 10px;
+    position: absolute;
+    left: 0;
+    font-size: 14px;
+}
+
+#oldPass,
+#newPass,
+#rePass{
+    border: 0;
+    line-height: 36px;
+    position: absolute;
+    padding-left: 10px;
+    width: 261px;
+    height: 36px;
+    left: 75px;
+    top: 0;
+    border-radius: 0 4px 4px 0;
+}
+
+.btn{
+	cursor: pointer;
+    left: 65px;
+    top: 270px;
+    position: absolute;
+    border-radius: 5px;
+    border: 0;
+    font-size: 18px;
+    line-height: 35px;
+    height: 35px;
+    width: 308px;
+    background-color: #6bcaf1;
+    background: -moz-linear-gradient(#acdddc,#5CA0DD);
+    background: -webkit-linear-gradient(#acdddc,#5CA0DD);
+    background: -o-linear-gradient(#acdddc,#5CA0DD);
+    background: -ms-linear-gradient(#acdddc,#5CA0DD);
+    background: linear-gradient(#acdddc,#5CA0DD);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#acdddc', endColorstr='#5CA0DD',GradientType=0 );
+    text-shadow: 1px 2px 5px #979797;
+}
+:root .btn{filter:none;}
+
+.mask{
+    z-index: 200;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.5);
+}
+
+.tooltip{
+    border-radius: 5px;
+    font-family: "微软雅黑";
+    letter-spacing: 5px;
+    text-align: center;
+    position: relative;
+    color: red;
+    z-index: 100;
+    margin: 0 auto;
+    margin-top: 232px;
+    width: 200px;
+    height: 25px;
+    font-size: 14px;
+    background-color: #ddfcff;
+    line-height: 25px;
+    box-shadow: 1px 2px 5px #979797;
+}
+
+.tooltip>span{
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-top-color: #ddfcff;
+    left: 50%;
+    margin-left: -3px;
+}
