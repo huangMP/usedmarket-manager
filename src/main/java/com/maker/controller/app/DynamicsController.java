@@ -33,7 +33,7 @@ public class DynamicsController extends BaseController{
     public ModelAndView displaySchool(String dynamicsId){
         Dynamics dynamics = dynamicsService.findByDynamicsId(dynamicsId);
         if(null != dynamics){
-            return getModelAndView("schooldynamics/schooldynamics_display" ,"dynamics", dynamics);
+            return getModelAndView("app/dynamics/display" ,"dynamics", dynamics);
         }
         return null;
     }

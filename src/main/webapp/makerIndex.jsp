@@ -737,6 +737,21 @@
         <div>
             <a href="homepagemngmt.jsp"><button style="color:red;"><h2>跳转到首页数据管理</h2></button></a>
         </div>
+
+
+        <span>-----------校园动态-----------------------------------</span>
+        <h4>通过 dynamicsId 展示某条动态</h4>
+        <form action="AppDynamics/displaySchool" method="post">
+            <table>
+                <tr>
+                    <td>动态Id</td>
+                    <td><input name="dynamicsId"/></td>
+                </tr>
+            </table>
+            <input type="submit" value="提交">
+        </form>
+
+
     </div>
 </div>
 

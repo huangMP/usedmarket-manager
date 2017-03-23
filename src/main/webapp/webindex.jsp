@@ -524,7 +524,7 @@
         </form>--%>
 
         <h4>----------------推荐/跑马条----------------</h4>
-        <form action="/UsedMarket/Sentence/add" method="post">
+        <form action="AppSentence/add" method="post">
             <table>
                 <tr>
                     <td>类型</td>
