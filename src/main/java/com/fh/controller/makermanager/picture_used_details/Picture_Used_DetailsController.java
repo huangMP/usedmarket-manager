@@ -130,6 +130,7 @@ public class Picture_Used_DetailsController extends BaseController {
      */
     @RequestMapping(value = "/goAdd")
     public ModelAndView goAdd() throws Exception {
+        System.out.println("j;lkj;lkjl;j;lk");
         ModelAndView mv = this.getModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
