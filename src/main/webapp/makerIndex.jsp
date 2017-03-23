@@ -499,7 +499,7 @@
         </form>
         <span>----------众筹-----------------------------------</span>
         <h4>查找</h4>
-        <form action="Crowdfunding/findByQueryCondition" method="post">
+        <form action="AppCrowdfunding/findByQueryCondition" method="post">
             <table>
                 <tr>
                     <td>类型</td>

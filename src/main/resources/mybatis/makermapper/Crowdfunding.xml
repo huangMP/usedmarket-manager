@@ -114,13 +114,19 @@
     </update>
 
 
-    <sql id="findSql">
+<!--    <sql id="findSql">
         SELECT
         <include refid="FieldAlias"/>,
         `t_user_info`.`username` `username`,
         `t_attachment`.`narrow_image_path` `headPortrait`
         FROM (`t_crowdfunding` INNER JOIN `t_user_info` ON `t_crowdfunding`.`add_user` = `t_user_info`.`user_id`)
         INNER JOIN `t_attachment` ON `t_crowdfunding`.`add_user` = `t_attachment`.`content_id`
+    </sql>-->
+
+    <sql id="findSql">
+        SELECT
+        <include refid="FieldAlias"/>
+        FROM `t_crowdfunding`
     </sql>
 
     <!-- 按要求查找 -->
