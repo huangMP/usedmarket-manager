@@ -25,8 +25,7 @@
         shipping_address,
         constellation,
         blood_type,
-        signature,
-        role_Id
+        signature
     </sql>
 
     <!-- 字段值 -->
@@ -45,8 +44,7 @@
         #{shippingAddress},
         #{constellation},
         #{bloodType},
-        #{signature},
-        #{roleId}
+        #{signature}
     </sql>
 
     <!-- 别名 -->
@@ -82,7 +80,6 @@
         <id property="userId" column="userId"/>
         <result property="headPortraitPath" column="filePath"/>
         <result property="narrowHeadPortraitPath" column="narrowImagePath"/>
-        <result property="roleName" column="roleName"/>
     </resultMap>
 
     <!-- 查找 UserInfoCustom By userId -->
@@ -90,11 +87,9 @@
         SELECT
         t_attachment.file_path "filePath",
         t_attachment.narrow_image_path "narrowImagePath",
-        t_role.role_name "roleName",
         <include refid="FieldAlias"></include>
         FROM
         (t_user_info INNER JOIN t_attachment ON t_user_info.attachment_id=t_attachment.attachment_id)
-        INNER JOIN t_role ON t_user_info.role_id=t_role.role_id
         WHERE user_id=#{userId}
     </select>
 
@@ -102,12 +97,10 @@
     <select id="findUserInfoCustomByUsername" resultMap="UICMap" parameterType="String">
         SELECT
         t_attachment.file_path "filePath",
-        t_attachment.narrow_image_path "narrowImagePath",
-        t_role.role_name "roleName",
+        t_attachment.narrow_image_path "narrowImagePath"
         <include refid="FieldAlias"></include>
         FROM
         (t_user_info INNER JOIN t_attachment ON t_user_info.attachment_id=t_attachment.attachment_id)
-        INNER JOIN t_role ON t_user_info.role_id=t_role.role_id
         WHERE username=#{username}
     </select>
 
@@ -155,8 +148,7 @@
         shipping_address=#{shippingAddress},
         blood_type=#{bloodType},
         constellation=#{constellation},
-        signature=#{signature},
-        role_Id=#{roleId}
+        signature=#{signature}
         WHERE user_id=#{userId}
     </update>
 
@@ -165,14 +157,12 @@
         SELECT
         <include refid="FieldAlias"></include>,
         t_attachment.file_path "picturePath",
-        t_attachment.narrow_image_path "narrowPicturePath",
-        t_role.role_name "roleName"
-        FROM (t_user_info INNER JOIN t_attachment ON t_user_info.user_id=t_attachment.content_id)
-        INNER JOIN t_role ON t_user_info.role_id=t_role.role_id
+        t_attachment.narrow_image_path "narrowPicturePath"
+        FROM t_user_info INNER JOIN t_attachment ON t_user_info.user_id=t_attachment.content_id
         WHERE 1=1
         <if test="type != null and type != '' and type != 'all' ">
         AND `t_user_info`.${type} = #{queryValue}
-    </if>
+        </if>
         <if test="secondType != null and secondType != '' and secondType != 'all' ">
             AND `t_user_info`.${secondType} = #{secondQueryValue}
         </if>

@@ -60,26 +60,6 @@
         </form>
 
         <span>----------------------------------------------</span>
-        <h3>测试修改密码</h3><br/>
-        <form action="AppUserInfo/editPassword" method="post" enctype="multipart/form-data">
-            <table>
-                <tr>
-                    <td>用户Id</td>
-                    <td><input name="userId"/></td>
-                </tr>
-                <tr>
-                    <td>密码</td>
-                    <td><input name="password" /></td>
-                </tr>
-                <tr>
-                    <td>新密码</td>
-                    <td><input name="newPassword" /></td>
-                </tr>
-            </table>
-            <input type="submit" value="修改">
-        </form>
-
-        <span>----------------------------------------------</span>
         <h3>测试修改头像</h3><br/>
         <form action="AppUserInfo/editHeadPortrait" method="post" enctype="multipart/form-data">
             <table>
@@ -325,52 +305,6 @@
             <input type="submit" value="提交">
         </form>
 
-
-        <span>-----------捐赠物品-----------------------------------</span>
-        <h3>上传捐赠物品</h3>
-        <h4>上传成功返回DonationDto，失败返回null</h4>
-        <form action="Donation/insert" method="post" enctype="multipart/form-data">
-            <table>
-                <tr>
-                    <td>用户id</td>
-                    <td><input name="userId"/></td>
-                </tr>
-                <tr>
-                    <td>捐赠物品名称</td>
-                    <td><input name="donationName"/></td>
-                </tr>
-                <tr>
-                    <td>类别</td>
-                    <td><input name="category"/></td>
-                </tr>
-                <tr>
-                    <td>数量</td>
-                    <td><input name="amount"/></td>
-                </tr>
-                <tr>
-                    <td>联系电话</td>
-                    <td><input name="phone"/></td>
-                </tr>
-                <tr>
-                    <td>描述</td>
-                    <td><input name="description"/></td>
-                </tr>
-                <tr>
-                    <td>定位</td>
-                    <td><input name="location"/></td>
-                </tr>
-                <tr>
-                    <td>图片1</td>
-                    <td><input type="file" name="images"></td>
-                </tr>
-                <tr>
-                    <td>图片2</td>
-                    <td><input type="file" name="images"></td>
-                </tr>
-            </table>
-            <input type="submit" value="提交">
-        </form>
-
         <span>----------捐赠物品-----------------------------------</span>
         <h4>条件查找 </h4>
         <form action="Donation/findByQueryCondition" method="post">
@@ -423,7 +357,7 @@
             <input type="submit" value="提交">
         </form>
 
-        <span>-----------捐赠物品-----------------------------------</span>
+        <%--<span>-----------捐赠物品-----------------------------------</span>
         <h4>按列修改（不支持修改图片）</h4>
         <h4>修改成功返回 修改后的 DonationCustom；否则返回null </h4>
         <form action="Donation/edit" method="post">
@@ -466,7 +400,7 @@
             </table>
             <input type="submit" value="提交">
         </form>
-
+--%>
 
         <span>-----------收藏物品-----------------------------------</span>
         <h4>收藏</h4>
@@ -638,6 +572,27 @@
         </form>
 
 
+        <span>----------校历活动-----------------------------------</span>
+        <h4>按条件查找 </h4>
+        <form action="AppSchoolcalendar/findActivitiesByDate" method="post">
+            <table>
+                <tr>
+                    <td>日期1</td>
+                    <td>
+                        <input name="date1" id="date1">
+                    </td>
+                </tr>
+                <tr>
+                    <td>日期2</td>
+                    <td>
+                        <input name="date2" id="date2">
+                    </td>
+                </tr>
+            </table>
+            <input type="submit" value="提交">
+        </form>
+
+
         <span>----------二手分类-二手专题-----------------------------------</span>
         <h4>条件查找 </h4>
         <form action="CommodityCategory/findByQueryCondition" method="post">
@@ -710,7 +665,7 @@
         <span>-----------校园动态---捐赠动态----条件查找-----------------------</span>
         <h4>条件查找 </h4>
         <h4>找得到返回 Dynamics的list集合 </h4>
-        <form action="Dynamics/findDynamicsByQueryCondition" method="post">
+        <form action="AppDynamics/findDynamicsByQueryCondition" method="post">
             <table>
                 <tr>
                     <td>类型</td>
@@ -790,27 +745,27 @@
 
 </body>
 
-<script src="/static/js/jquery-3.0.0.js"></script>
+<script src="static/js/jquery-1.7.2.js"></script>
 <script type="text/javascript">
 
-/*    $(function(){
-        $.ajax({
-            type:'post',
-            url:'/UserInfo/login',
-            //请求是key/value这里不需要指定contentType，因为默认就 是key/value类型
-            //contentType:'application/json;charset=utf-8',
-            //数据格式是json串，商品信息
-            data:{username:"11111",password:"1111"},
-            success:function(data){//返回json结果
-                if( "" == data ){
-                    alert("是null");
-                }else{
-                    alert("不是null");
-                }
-                alert(data);
-            }
-        });
-    });*/
+    /*    $(function(){
+     $.ajax({
+     type:'post',
+     url:'/UserInfo/login',
+     //请求是key/value这里不需要指定contentType，因为默认就 是key/value类型
+     //contentType:'application/json;charset=utf-8',
+     //数据格式是json串，商品信息
+     data:{username:"11111",password:"1111"},
+     success:function(data){//返回json结果
+     if( "" == data ){
+     alert("是null");
+     }else{
+     alert("不是null");
+     }
+     alert(data);
+     }
+     });
+     });*/
 
 </script>
 </html>

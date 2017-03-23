@@ -128,6 +128,7 @@
 			
 			<property name="filterChainDefinitions">
 				<value>
+					/static/bootstrap-datetimepicker/** =anon
 					/static/login/** 			= anon
 					/static/js/myjs/** 			= authc
 					/static/js/** 				= anon

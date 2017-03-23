@@ -15,7 +15,7 @@
 <body>
 <div>
     <div>
-        <span>-----------捐赠动态-----------------------------------</span>
+        <%--<span>-----------捐赠动态-----------------------------------</span>
         <h4>跳转到新增动态页面 (web使用的)</h4>
         <form action="WebDynamics/toInsertDonation" method="post">
             <input type="submit" value="点击按钮跳转">
@@ -75,7 +75,8 @@
             </table>
             <input type="submit" value="提交">
         </form>
-
+--%>
+<%--
 
         <span>-----------校园动态---捐赠动态----条件查找-----------------------</span>
         <h4>条件查找 </h4>
@@ -148,6 +149,7 @@
             </table>
             <input type="submit" value="提交">
         </form>
+--%>
 
 
         <span>-----------二手分类-二手专题----------------------------------</span>
@@ -282,6 +284,7 @@
             </table>
             <input type="submit" value="提交">
         </form>
+<%--
 
         <span>-----------------众筹-------------------------</span>
         <h4>添加众筹</h4>
@@ -397,8 +400,9 @@
             </table>
             <input type="submit" value="提交">
         </form>
+--%>
 
-        <span>-----------商店-----------------------------------</span>
+<%--        <span>-----------商店-----------------------------------</span>
         <h4>添加</h4>
         <form action="/WebStore/insert" method="post" enctype="multipart/form-data">
             <table>
@@ -422,9 +426,9 @@
         <h4>查找所有商店 </h4>
         <form action="WebStore/findAll" method="post">
             <input type="submit" value="提交">
-        </form>
+        </form>--%>
 
-
+<%--
 
         <h4>----------------添加角色----------------</h4>
         <form action="WebRole/findByQueryCondition" method="post">
@@ -517,7 +521,7 @@
                 </tr>
             </table>
             <input type="submit" value="提交">
-        </form>
+        </form>--%>
 
         <h4>----------------推荐/跑马条----------------</h4>
         <form action="/UsedMarket/Sentence/add" method="post">

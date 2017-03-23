@@ -14,6 +14,7 @@ import com.maker.util.UuidUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -101,6 +102,9 @@ public class UserInfoController extends BaseController{
     @ResponseBody
     public HttpResult login(UserInfo userInfo) {
 
+        System.out.println(userInfo.toString());
+
+
         //判断接受到的信息是否正确
         if (
                 null == userInfo.getUsername().trim() || "".equals(userInfo.getUsername().trim()) ||
@@ -169,9 +173,10 @@ public class UserInfoController extends BaseController{
      * @param futureValue 未来值
      * @return UserInfo
      */
-    @RequestMapping(value = "/edit")
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
     @ResponseBody
     public HttpResult edit(String userId, String index, String currentValue, String futureValue) {
+        System.out.println(userId.trim()+"=="+index.trim()+"=="+currentValue.trim()+"=="+futureValue.trim());
         UserInfoCustom userInfoCustom = userInfoService.update(userId.trim(), index.trim(), currentValue.trim(), futureValue.trim());
         return userInfoCustom != null ?
                 getHttpResult(this.OPERATION_SUCCESS,userInfoCustom) :

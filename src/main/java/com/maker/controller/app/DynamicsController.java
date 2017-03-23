@@ -17,7 +17,7 @@ import javax.annotation.Resource;
  * decription : 动态信息 controller
  */
 @Controller("DynamicsController")
-@RequestMapping("/Dynamics")
+@RequestMapping("/AppDynamics")
 public class DynamicsController extends BaseController{
 
     @Resource(name = "dynamicsService")
