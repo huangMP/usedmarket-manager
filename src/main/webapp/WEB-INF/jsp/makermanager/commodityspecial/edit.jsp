@@ -27,16 +27,16 @@
 				<div class="row">
 					<div class="col-xs-12">
 					
-					<form action="MakerCommoditycategory/${msg }.do" name="Form" id="Form" method="post">
+					<form action="MakerCommoditySpecial/${msg }.do" name="Form" id="Form" method="post">
 						<input type="hidden" name="COMMODITY_CATEGORY_ID" id="COMMODITY_CATEGORY_ID" value="${pd.COMMODITY_CATEGORY_ID}"/>
 						<div id="zhongxin" style="padding-top: 13px;">
 						<table id="table_report" class="table table-striped table-bordered table-hover">
 							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">分类名称:</td>
-								<td><input type="text" name="TITLE" id="TITLE" value="${pd.TITLE}" maxlength="255" placeholder="这里输入分类名称" title="分类名称" style="width:98%;"/></td>
+								<td style="width:75px;text-align: right;padding-top: 13px;">专题名称:</td>
+								<td><input type="text" name="TITLE" id="TITLE" value="${pd.TITLE}" maxlength="255" placeholder="这里输入专题名称" title="专题名称" style="width:98%;"/></td>
 							</tr>
-							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">1：二手分类；2：二手专题；:</td>
+							<tr hidden="hidden">
+								<td style="width:75px;text-align: right;padding-top: 13px;">1：二手专题；2：二手专题；:</td>
 								<td><input type="number" name="TYPE" id="TYPE" value="${pd.TYPE}" maxlength="32" placeholder="这里输入1：二手分类；2：二手专题；" title="1：二手分类；2：二手专题；" style="width:98%;"/></td>
 							</tr>
 							<tr>
@@ -112,14 +112,14 @@
 			if($("#TITLE").val()==""){
 				$("#TITLE").tips({
 					side:3,
-		            msg:'请输入分类名称',
+		            msg:'请输入专题名称',
 		            bg:'#AE81FF',
 		            time:2
 		        });
 				$("#TITLE").focus();
 			return false;
 			}
-			if($("#TYPE").val()==""){
+			/*if($("#TYPE").val()==""){
 				$("#TYPE").tips({
 					side:3,
 		            msg:'请输入1：二手分类；2：二手专题；',
@@ -128,7 +128,7 @@
 		        });
 				$("#TYPE").focus();
 			return false;
-			}
+			}*/
 			if($("#ATTACHMENT_ID").val()==""){
 				$("#ATTACHMENT_ID").tips({
 					side:3,

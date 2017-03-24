@@ -1,16 +1,12 @@
-package com.fh.controller.makermanager.commoditycategory;
+package com.fh.controller.makermanager.commodityspecial;
 
-import java.io.PrintWriter;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import javax.annotation.Resource;
-
+import com.fh.controller.base.BaseController;
+import com.fh.entity.Page;
+import com.fh.service.makermanager.commoditycategory.WebCommodityCategoryManager;
 import com.fh.service.makermanager.picture_used_details.Picture_Used_DetailsManager;
+import com.fh.util.AppUtil;
+import com.fh.util.Jurisdiction;
+import com.fh.util.PageData;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
@@ -18,24 +14,23 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import com.fh.controller.base.BaseController;
-import com.fh.entity.Page;
-import com.fh.util.AppUtil;
-import com.fh.util.ObjectExcelView;
-import com.fh.util.PageData;
-import com.fh.util.Jurisdiction;
-import com.fh.service.makermanager.commoditycategory.WebCommodityCategoryManager;
+
+import javax.annotation.Resource;
+import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /** 
- * 说明：二手商品分类管理
+ * 说明：二手商品专题管理
  * 创建人：chengpeng
  * 创建时间：2017-03-23
  */
 @Controller
-@RequestMapping(value="/MakerCommoditycategory")
-public class MakerCommodityCategoryController extends BaseController {
+@RequestMapping(value="/MakerCommoditySpecial")
+public class MakerCommoditySpecialController extends BaseController {
 	
-	String menuUrl = "MakerCommoditycategory/list.do"; //菜单地址(权限用)
+	String menuUrl = "MakerCommoditySpecial/list.do"; //菜单地址(权限用)
 	@Resource(name="MakerCommoditycategoryService")
 	private WebCommodityCategoryManager commoditycategoryService;
 
@@ -53,7 +48,7 @@ public class MakerCommodityCategoryController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		pd.put("TYPE", 1 ); // 筛选出 1：二手分类；2：二手专题；
+		pd.put("TYPE", 2 ); // 筛选出 1：二手分类；2：二手专题；
 		pd.put("ADD_USER", Jurisdiction.getUsername() );	//添加人名称
 		pd.put("ADD_DATE", new Date() );	//添加时间
 		commoditycategoryService.save(pd);
@@ -110,7 +105,7 @@ public class MakerCommodityCategoryController extends BaseController {
 		if(null != keywords && !"".equals(keywords)){
 			pd.put("keywords", keywords.trim());
 		}
-		pd.put("TYPE", 1 ); // 筛选出 1：二手分类；2：二手专题；
+		pd.put("TYPE", 2 ); // 筛选出 1：二手分类；2：二手专题；
 		page.setPd(pd);
 		List<PageData>	varList = commoditycategoryService.list(page);	//列出CommodityCategory列表
 		for(PageData var : varList){
@@ -118,7 +113,7 @@ public class MakerCommodityCategoryController extends BaseController {
 			List<PageData> pictureList = picture_used_detailsService.selectPicturesByContentId(contentId);
 			var.put("pictureList" , pictureList );
 		}
-		mv.setViewName("makermanager/commoditycategory/list");
+		mv.setViewName("makermanager/commodityspecial/list");
 		mv.addObject("varList", varList);
 		mv.addObject("pd", pd);
 		mv.addObject("QX",Jurisdiction.getHC());	//按钮权限
@@ -135,7 +130,7 @@ public class MakerCommodityCategoryController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		pd.put("COMMODITY_CATEGORY_ID", this.get32UUID());	//主键
-		mv.setViewName("makermanager/commoditycategory/edit");
+		mv.setViewName("makermanager/commodityspecial/edit");
 		mv.addObject("msg", "save");
 		mv.addObject("pd", pd);
 		return mv;
@@ -151,7 +146,7 @@ public class MakerCommodityCategoryController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		pd = commoditycategoryService.findById(pd);	//根据ID读取
-		mv.setViewName("makermanager/commoditycategory/edit");
+		mv.setViewName("makermanager/commodityspecial/edit");
 		mv.addObject("msg", "edit");
 		mv.addObject("pd", pd);
 		return mv;

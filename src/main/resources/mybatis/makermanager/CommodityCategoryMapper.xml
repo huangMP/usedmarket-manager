@@ -91,6 +91,12 @@
 				-->
 				)
 		</if>
+		<if test="pd.TYPE!= null and pd.TYPE != ''"><!-- 关键词检索 -->
+			and
+			(
+			TYPE = #{pd.TYPE}
+			)
+		</if>
 	</select>
 	
 	<!-- 列表(全部) -->

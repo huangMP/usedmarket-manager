@@ -68,7 +68,7 @@
 									</th>
 									<th class="center" style="width:50px;">序号</th>
 									<th class="center">分类名称</th>
-									<th class="center">1：二手分类；2：二手专题；</th>
+									<th class="center" hidden="hidden">1：二手分类；2：二手专题；</th>
 									<th class="center">图片</th>
 									<th class="center">添加者名称</th>
 									<th class="center">添加时间</th>
@@ -89,7 +89,7 @@
 											</td>
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
 											<td class='center'>${var.TITLE}</td>
-											<td class='center'>${var.TYPE}</td>
+											<td class='center' hidden="hidden">${var.TYPE}</td>
 											<td class='center'>
 												<c:forEach items="${var.pictureList}" var="i">
 													<a href="<%=basePath%>static/images/${i.PATH}" title="${i.TITLE}" class="bwGal"><img src="<%=basePath%>static/images/${i.PATH}" alt="${i.TITLE}" width="100"></a>
