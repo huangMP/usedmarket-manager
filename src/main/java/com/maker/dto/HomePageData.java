@@ -1,5 +1,6 @@
 package com.maker.dto;
 
+import com.fh.util.PageData;
 import com.maker.entity.Carousel;
 import com.maker.entity.SentenceBean;
 import com.maker.entity.SubjectHead;
@@ -15,7 +16,7 @@ public class HomePageData {
 	/**
 	 * 轮播图
 	 */
-	private List<Carousel> carouselList;
+	private List<PageData> carouselList;
 
 	/**
 	 * 跑马条
@@ -50,7 +51,7 @@ public class HomePageData {
 	public HomePageData() {
 	}
 
-	public HomePageData(List<Carousel> carouselList, List<SentenceBean> sentenceBeanList, List<CommodityCategoryCustom> secondHandSpecialCustomList, List<CrowdfundingCustom> crowdfundingCustomList, List<DynamicsCustom> dynamicsCustomList, List<StoreCustom> storeCustomsList, List<SubjectHead> subjectHeadList) {
+	public HomePageData(List<PageData> carouselList, List<SentenceBean> sentenceBeanList, List<CommodityCategoryCustom> secondHandSpecialCustomList, List<CrowdfundingCustom> crowdfundingCustomList, List<DynamicsCustom> dynamicsCustomList, List<StoreCustom> storeCustomsList, List<SubjectHead> subjectHeadList) {
 		this.carouselList = carouselList;
 		this.sentenceBeanList = sentenceBeanList;
 		this.secondHandSpecialCustomList = secondHandSpecialCustomList;
@@ -68,11 +69,11 @@ public class HomePageData {
 		this.storeCustomsList = storeCustomsList;
 	}
 
-	public List<Carousel> getCarouselList() {
+	public List<PageData> getCarouselList() {
 		return carouselList;
 	}
 
-	public void setCarouselList(List<Carousel> carouselList) {
+	public void setCarouselList(List<PageData> carouselList) {
 		this.carouselList = carouselList;
 	}
 

@@ -13,7 +13,7 @@
     <sql id="Field">
         carousel_id,
         title,
-        add_user_id,
+        add_user,
         add_date,
         sort
     </sql>
@@ -22,7 +22,7 @@
     <sql id="FieldAlias">
         t_carousel.carousel_id "carouselId",
         t_carousel.title "title",
-        t_carousel.add_user_id "addUserId",
+        t_carousel.add_user "addUser",
         t_carousel.add_date "addDate",
         t_carousel.sort "sort"
     </sql>
@@ -31,15 +31,15 @@
     <sql id="FieldValue">
         #{carouselId},
         #{title},
-        #{addUserId},
+        #{addUser},
         #{addDate},
         #{sort}
     </sql>
 
     <!-- 查找前五条 Carousel -->
     <select id="selectTop5" resultType="Carousel">
-        SELECT <include refid="FieldAlias"/> , `t_attachment`.`narrow_image_path` imagePath FROM
-        t_carousel INNER JOIN t_attachment ON t_carousel.carousel_id = t_attachment.content_id
+        SELECT <include refid="FieldAlias"/> FROM
+        t_carousel
         ORDER BY sort DESC
         LIMIT 0,5
     </select>

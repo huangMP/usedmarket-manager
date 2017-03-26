@@ -1,5 +1,7 @@
 package com.maker.controller.app;
 
+import com.fh.service.makermanager.makercarousel.impl.MakerCarouselService;
+import com.fh.util.PageData;
 import com.maker.controller.BaseController;
 import com.maker.dto.*;
 import com.maker.entity.Carousel;
@@ -25,8 +27,8 @@ public class HomePageController extends BaseController{
 	/**
 	 * 轮播图service
 	 */
-	@Resource(name = "carouselService")
-	private CarouselService carouselService;
+	@Resource(name = "makercarouselService")
+	private MakerCarouselService makercarouselService;
 
 	/**
 	 * 单文字service
@@ -66,14 +68,14 @@ public class HomePageController extends BaseController{
 
 	@RequestMapping("/display")
 	@ResponseBody
-	public HttpResult HomePageDataDisplay(
+	public HttpResult HomePageDataDisplay (
 			@RequestParam(value = "sentenceSize", defaultValue = "5") Integer sentenceSize,
 			@RequestParam(value = "commodityCategorySize", defaultValue = "4") Integer commodityCategorySize,
 			@RequestParam(value = "crowdfundinSize", defaultValue = "5")Integer crowdfundinSize,
 			@RequestParam(value = "storeSize", defaultValue = "4")Integer storeSize,
-			@RequestParam(value = "dynamicsSize", defaultValue = "5")Integer dynamicsSize){
+			@RequestParam(value = "dynamicsSize", defaultValue = "5")Integer dynamicsSize) throws Exception {
 		//五条轮播图
-		List<Carousel> carouselList = carouselService.selectTop5();
+		List<PageData> carouselList = makercarouselService.selectTop5();
 		//五条跑马条
 		List<SentenceBean> sentenceBeanList = sentenceService.selectSentencesByCondition(new SentenceQueryCondition(1, 0, sentenceSize, false));
 		//全部二手专题
