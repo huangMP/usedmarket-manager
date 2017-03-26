@@ -27,7 +27,7 @@ public class Carousel {
 	/**
 	 * 添加人
 	 */
-	private String addUserId;
+	private String addUser;
 
 	/**
 	 * 添加日期
@@ -72,12 +72,12 @@ public class Carousel {
 		this.title = title;
 	}
 
-	public String getAddUserId() {
-		return addUserId;
+	public String getAddUser() {
+		return addUser;
 	}
 
-	public void setAddUserId(String addUserId) {
-		this.addUserId = addUserId;
+	public void setAddUser(String addUser) {
+		this.addUser = addUser;
 	}
 
 	public Date getAddDate() {
@@ -102,7 +102,7 @@ public class Carousel {
 				"carouselId='" + carouselId + '\'' +
 				", imagePath='" + imagePath + '\'' +
 				", title='" + title + '\'' +
-				", addUserId='" + addUserId + '\'' +
+				", addUser='" + addUser + '\'' +
 				", addDate='" + addDate + '\'' +
 				", sort='" + sort + '\'' +
 				'}';

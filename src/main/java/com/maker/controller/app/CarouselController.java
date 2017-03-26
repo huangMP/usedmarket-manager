@@ -41,7 +41,7 @@ public class CarouselController extends BaseController {
 			);
 
 			//暂时设置为空
-			carousel.setAddUserId("test");
+			carousel.setAddUser("test");
 
 			if (!image.isEmpty()) {
 				attachmentService.insert(image, carousel.getCarouselId(), "3", NarrowImage.bigNarrowTarget);
