@@ -433,7 +433,7 @@
             <input type="submit" value="提交">
         </form>
         <span>-----------首页数据展示-----------------------------------</span>
-        <form action="HomePage/display" method="post">
+        <form action="AppHomePage/display" method="post">
             <table>
                 <tr>
                     <td>跑马条数目</td>
