@@ -1,5 +1,7 @@
 package com.maker.service.impl;
 
+import com.fh.service.makermanager.picture_used_details.Picture_Used_DetailsManager;
+import com.fh.util.PageData;
 import com.maker.dao.CommodityCategoryDao;
 import com.maker.dto.CommodityCategoryCustom;
 import com.maker.dto.QueryCondition;
@@ -8,6 +10,7 @@ import com.maker.service.CommodityCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -19,6 +22,8 @@ public class CommodityCategoryServiceImpl implements CommodityCategoryService {
 
     @Autowired
     CommodityCategoryDao commodityCategoryDao;
+    @Resource(name="picture_used_detailsService")
+    private Picture_Used_DetailsManager picture_used_detailsService;
 
     @Override
     public boolean insert(CommodityCategory commodityCategory) {
@@ -37,12 +42,16 @@ public class CommodityCategoryServiceImpl implements CommodityCategoryService {
 
     @Override
     public CommodityCategoryCustom findCommodityCategoryCustomByCommodityCategoryId(String commodityCategoryId) {
-        return commodityCategoryDao.findCommodityCategoryCustomByCommodityCategoryId(commodityCategoryId);
+        CommodityCategoryCustom result = commodityCategoryDao.findCommodityCategoryCustomByCommodityCategoryId(commodityCategoryId);
+        result = findPictures(result) ;
+        return result;
     }
 
     @Override
     public List<CommodityCategoryCustom> findAll() {
-        return commodityCategoryDao.findAll();
+        List<CommodityCategoryCustom> result = commodityCategoryDao.findAll();
+        result = findPictures(result) ;
+        return result;
     }
 
     /**
@@ -61,6 +70,50 @@ public class CommodityCategoryServiceImpl implements CommodityCategoryService {
      * @return
      */
     public List<CommodityCategoryCustom> findByQueryCondition(QueryCondition queryCondition){
-        return commodityCategoryDao.findByQueryCondition(queryCondition);
+        List<CommodityCategoryCustom> result = commodityCategoryDao.findByQueryCondition(queryCondition);
+        result = findPictures(result) ;
+        return result;
+    }
+
+    /**
+     * CommodityCategoryCustom 给每一个 item 填充图片
+     */
+    private List<CommodityCategoryCustom> findPictures(List<CommodityCategoryCustom> list){
+        if( list.size()>0 ){
+            for(CommodityCategoryCustom item : list ){
+                String itemId = item.getCommodityCategoryId();
+                List<PageData> pictures = null;
+                try {
+                    pictures = picture_used_detailsService.selectPicturesByContentId(itemId);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                if(pictures.size()>0){
+                    item.setPicturePath(pictures.get(0).getString("PATH"));
+                    item.setNarrowPicturePath(pictures.get(0).getString("PATH"));
+                }
+            }
+        }
+        return list;
+    }
+
+    /**
+     *  给每 CommodityCategoryCustom 填充图片
+     */
+    private CommodityCategoryCustom findPictures(CommodityCategoryCustom commodityCategoryCustom){
+        if( commodityCategoryCustom != null ){
+            String itemId = commodityCategoryCustom.getCommodityCategoryId();
+            List<PageData> pictures = null;
+            try {
+                pictures = picture_used_detailsService.selectPicturesByContentId(itemId);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if( pictures.size() > 0 ) {
+                commodityCategoryCustom.setPicturePath(pictures.get(0).getString("PATH"));
+                commodityCategoryCustom.setNarrowPicturePath(pictures.get(0).getString("PATH"));
+            }
+        }
+        return commodityCategoryCustom;
     }
 }

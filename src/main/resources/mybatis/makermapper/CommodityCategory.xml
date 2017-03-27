@@ -51,10 +51,8 @@
 
     <select id="findCommodityCategoryCustomByCommodityCategoryId" resultType="CommodityCategoryCustom">
         SELECT
-        <include refid="FieldAlias"></include>,
-        t_attachment.file_path "picturePath",
-        t_attachment.narrow_image_path "narrowPicturePath"
-        FROM t_commodity_category INNER JOIN t_attachment ON t_commodity_category.attachment_id=t_attachment.attachment_id
+        <include refid="FieldAlias"></include>
+        FROM t_commodity_category
         WHERE commodity_category_id=#{commodityCategoryId}
     </select>
 
@@ -80,10 +78,8 @@
     <!-- 查找所有 -->
     <select id="findAll" resultType="CommodityCategoryCustom">
         SELECT
-        <include refid="FieldAlias"></include>,
-        t_attachment.file_path "picturePath",
-        t_attachment.narrow_image_path "narrowPicturePath"
-        FROM t_commodity_category INNER JOIN t_attachment ON t_commodity_category.attachment_id=t_attachment.attachment_id
+        <include refid="FieldAlias"></include>
+        FROM t_commodity_category
         WHERE 1=1
         ORDER BY t_commodity_category.sort DESC
     </select>
@@ -103,10 +99,8 @@
 
     <select id="findByQueryCondition" resultType="CommodityCategoryCustom" parameterType="QueryCondition">
         SELECT
-        <include refid="FieldAlias"></include>,
-        t_attachment.file_path "picturePath",
-        t_attachment.narrow_image_path "narrowPicturePath"
-        FROM t_commodity_category INNER JOIN t_attachment ON t_commodity_category.attachment_id=t_attachment.attachment_id
+        <include refid="FieldAlias"></include>
+        FROM t_commodity_category
         WHERE 1=1
         <if test="type != null and type != '' and type != 'all' ">
             AND `t_commodity_category`.${type} = #{queryValue}
