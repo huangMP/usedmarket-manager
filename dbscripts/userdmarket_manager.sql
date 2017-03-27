@@ -287,7 +287,7 @@ DROP TABLE IF EXISTS `t_carousel`;
 CREATE TABLE `t_carousel` (
   `carousel_id` varchar(50) NOT NULL COMMENT '轮播图id',
   `title` varchar(20) DEFAULT NULL COMMENT '轮播图标题',
-  `add_user_id` varchar(50) DEFAULT NULL COMMENT '添加人',
+  `add_user` varchar(50) DEFAULT NULL COMMENT '添加人',
   `add_date` datetime DEFAULT NULL COMMENT '添加时间',
   `sort` int(11) DEFAULT NULL COMMENT '位置',
   PRIMARY KEY (`carousel_id`)
@@ -295,7 +295,7 @@ CREATE TABLE `t_carousel` (
 
 /*Data for the table `t_carousel` */
 
-insert  into `t_carousel`(`carousel_id`,`title`,`add_user_id`,`add_date`,`sort`) values ('2c8a3db572dc49a1a938a3360231b7ab','测试1','test','2016-12-04 14:20:29',0),('d7321e5a4b314eddbc35cd8e56d41f47','测试1','test','2016-12-04 14:19:40',0);
+insert  into `t_carousel`(`carousel_id`,`title`,`add_user`,`add_date`,`sort`) values ('2c8a3db572dc49a1a938a3360231b7ab','测试1','test','2016-12-04 14:20:29',0),('d7321e5a4b314eddbc35cd8e56d41f47','测试1','test','2016-12-04 14:19:40',0);
 
 /*Table structure for table `t_collection` */
 
