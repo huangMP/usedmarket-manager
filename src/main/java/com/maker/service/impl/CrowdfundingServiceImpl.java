@@ -1,6 +1,11 @@
 package com.maker.service.impl;
 
+import com.alibaba.druid.sql.visitor.functions.Concat;
+import com.fh.service.makermanager.picture_used_details.Picture_Used_DetailsManager;
+import com.fh.util.Const;
+import com.fh.util.PageData;
 import com.maker.dao.CrowdfundingDao;
+import com.maker.dto.CommodityCategoryCustom;
 import com.maker.dto.CrowdfundingCustom;
 import com.maker.dto.QueryCondition;
 import com.maker.entity.Attachment;
@@ -9,6 +14,7 @@ import com.maker.service.CrowdfundingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +27,9 @@ public class CrowdfundingServiceImpl implements CrowdfundingService {
 
     @Autowired
     CrowdfundingDao crowdfundingDao;
+
+    @Resource(name="picture_used_detailsService")
+    private Picture_Used_DetailsManager picture_used_detailsService;
 
     @Override
     public boolean insert(Crowdfunding crowdfunding) {
@@ -62,26 +71,64 @@ public class CrowdfundingServiceImpl implements CrowdfundingService {
             return crowdfundingCustoms;
         }
 
-        System.out.println("找到捐赠物品条目:"+crowdfundingCustoms.size());
-
-        List<Attachment> attachments = crowdfundingDao.loadImages(crowdfundingCustoms);
-        System.out.println("总的图片数量:" + attachments.size() );
-
-        for( int i=0;i<crowdfundingCustoms.size();i++ ){
-            List<String> imageList = new ArrayList<String>();
-            List<String> narrowimageList = new ArrayList<String>();
-            for(int j=0;j<attachments.size();j++){
-                System.out.println(attachments.get(j).getContentId());
-                if( crowdfundingCustoms.get(i).getCrowdfundingId().equals( attachments.get(j).getContentId() ) ){
-                    System.out.println(attachments.get(j).getContentId());
-                    imageList.add( attachments.get(j).getFilePath() );
-                    narrowimageList.add( attachments.get(j).getNarrowImagePath() );
-                }
-            }
-            crowdfundingCustoms.get(i).setImgs( imageList );
-            crowdfundingCustoms.get(i).setNarrowImgs( narrowimageList );
-        }
+        crowdfundingCustoms = findPictures(crowdfundingCustoms);
 
         return crowdfundingCustoms;
+    }
+
+    /**
+     * CrowdfundingCustom 给每一个 item 填充图片
+     */
+    private List<CrowdfundingCustom> findPictures(List<CrowdfundingCustom> list){
+        if( list.size()>0 ){
+            for(CrowdfundingCustom item : list ){
+                String itemId = item.getCrowdfundingId();
+                List<PageData> pictures = null;
+                try {
+                    pictures = picture_used_detailsService.selectPicturesByContentId(itemId);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                if(pictures.size()>0){
+                    List<String> imageList = new ArrayList<String>();
+                    List<String> narrowimageList = new ArrayList<String>();
+                    for(PageData pictrue : pictures ){
+                        imageList.add( Const.FILEPATHIMG + pictrue.getString("PATH") );
+                        narrowimageList.add( Const.FILEPATHIMG + pictrue.getString("PATH") );
+                    }
+                    item.setImgs(imageList);
+                    item.setNarrowImgs(narrowimageList);
+                }
+            }
+
+        }
+        return list;
+    }
+
+
+    /**
+     *  给每 CrowdfundingCustom 填充图片
+     */
+    private CrowdfundingCustom findPictures(CrowdfundingCustom crowdfundingCustom){
+        if( crowdfundingCustom != null ){
+            String itemId = crowdfundingCustom.getCrowdfundingId();
+            List<PageData> pictures = null;
+            try {
+                pictures = picture_used_detailsService.selectPicturesByContentId(itemId);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if( pictures.size() > 0 ) {
+                List<String> imageList = new ArrayList<String>();
+                List<String> narrowimageList = new ArrayList<String>();
+                for(PageData pictrue : pictures ){
+                    imageList.add( Const.FILEPATHIMG + pictrue.getString("PATH") );
+                    narrowimageList.add( Const.FILEPATHIMG + pictrue.getString("PATH") );
+                }
+                crowdfundingCustom.setImgs(imageList);
+                crowdfundingCustom.setNarrowImgs(narrowimageList);
+            }
+        }
+        return crowdfundingCustom;
     }
 }
