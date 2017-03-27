@@ -64,6 +64,9 @@ public class MakerCarouselService implements MakerCarouselManager{
 		List<PageData> pd = (List<PageData>)dao.findForList("MakerCarouselMapper.selectTop5", null);
 		for ( PageData var : pd) {
 			List<PageData> IMG_PD = (List<PageData>)dao.findForList("Picture_Used_DetailsMapper.selectPicturesByContentId", var.getString("CAROUSEL_ID"));
+			if (IMG_PD.size() <= 0) {
+				continue;
+			}
 			String IMG_PATH = IMG_PD.get(0).getString("PATH");
 			var.put("IMG_PATH", PathUtil.getClasspath() + Const.FILEPATHIMG + IMG_PATH);
 		}
