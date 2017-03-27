@@ -140,6 +140,7 @@
 					/static/practices/** 		= anon
 					/static/CuSunPlayer/**		= anon
 					/static/studydocument/**	= anon
+					/static/attachment/**		= anon
 					/images**/** 		        = anon
 					/images/** 		            = anon
 					/uploadFiles/uploadImgs/** 	= anon
