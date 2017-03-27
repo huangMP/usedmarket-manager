@@ -128,26 +128,6 @@
             <input type="submit" value="点击按钮跳转">
         </form>
 
-        <span>-----------商店-----------------------------------</span>
-        <h4>添加</h4>
-        <form action="WebStore/insert" method="post" enctype="multipart/form-data">
-            <table>
-                <tr>
-                    <td>描述</td>
-                    <td><input name="description"/></td>
-                </tr>
-                <tr>
-                    <td>店名</td>
-                    <td><input name="storeName"/></td>
-                </tr>
-                <tr>
-                    <td>图片</td>
-                    <td><input name="images" type="file" /></td>
-                </tr>
-            </table>
-            <input type="submit" value="提交">
-        </form>
-
         <span>-----------标题头-----------------------------------</span>
         <h4>添加</h4>
         <form action="SubjectHead/insert" method="post">
@@ -158,8 +138,7 @@
                         <select name="type">
                             <option value="0">火热众筹</option>
                             <option value="1">二手专题</option>
-                            <option value="2">特色店铺</option>
-                            <option value="3">热门动态</option>
+                            <option value="2">热门动态</option>
                         </select>
                     </td>
                 </tr>
@@ -169,7 +148,6 @@
                         <select name="title">
                             <option value="火热众筹">火热众筹</option>
                             <option value="二手专题">二手专题</option>
-                            <option value="特色店铺">特色店铺</option>
                             <option value="热门动态">热门动态</option>
                         </select>
                     </td>

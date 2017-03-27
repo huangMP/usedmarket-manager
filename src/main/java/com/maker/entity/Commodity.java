@@ -19,11 +19,6 @@ public class Commodity {
 	private String userId;
 
 	/**
-	 * 商店id
-	 */
-	private String storeId;
-
-	/**
 	 * 商品名称
 	 */
 	private String commodityName;
@@ -76,10 +71,9 @@ public class Commodity {
 	public Commodity() {
 	}
 
-	public Commodity(String commodityId, String userId, String storeId, String commodityName, String category, double price, Integer amount, String description, String location, Integer preferNum, Date launchDate, Integer salesVolume, Integer status) {
+	public Commodity(String commodityId, String userId, String commodityName, String category, double price, Integer amount, String description, String location, Integer preferNum, Date launchDate, Integer salesVolume, Integer status) {
 		this.commodityId = commodityId;
 		this.userId = userId;
-		this.storeId = storeId;
 		this.commodityName = commodityName;
 		this.category = category;
 		this.price = price;
@@ -106,14 +100,6 @@ public class Commodity {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
-	}
-
-	public String getStoreId() {
-		return storeId;
-	}
-
-	public void setStoreId(String storeId) {
-		this.storeId = storeId;
 	}
 
 	public String getCommodityName() {
@@ -201,7 +187,6 @@ public class Commodity {
 		return "Commodity{" +
 				"commodityId='" + commodityId + '\'' +
 				", userId='" + userId + '\'' +
-				", storeId='" + storeId + '\'' +
 				", commodityName='" + commodityName + '\'' +
 				", category='" + category + '\'' +
 				", price=" + price +

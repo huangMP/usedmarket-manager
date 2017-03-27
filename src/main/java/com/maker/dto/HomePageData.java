@@ -39,11 +39,6 @@ public class HomePageData {
 	private List<DynamicsCustom> dynamicsCustomList;
 
 	/**
-	 * 店铺
-	 */
-	private List<StoreCustom> storeCustomsList;
-
-	/**
 	 * 标题头
 	 */
 	private List<SubjectHead> subjectHeadList;
@@ -51,22 +46,13 @@ public class HomePageData {
 	public HomePageData() {
 	}
 
-	public HomePageData(List<PageData> carouselList, List<SentenceBean> sentenceBeanList, List<CommodityCategoryCustom> secondHandSpecialCustomList, List<CrowdfundingCustom> crowdfundingCustomList, List<DynamicsCustom> dynamicsCustomList, List<StoreCustom> storeCustomsList, List<SubjectHead> subjectHeadList) {
+	public HomePageData(List<PageData> carouselList, List<SentenceBean> sentenceBeanList, List<CommodityCategoryCustom> secondHandSpecialCustomList, List<CrowdfundingCustom> crowdfundingCustomList, List<DynamicsCustom> dynamicsCustomList, List<SubjectHead> subjectHeadList) {
 		this.carouselList = carouselList;
 		this.sentenceBeanList = sentenceBeanList;
 		this.secondHandSpecialCustomList = secondHandSpecialCustomList;
 		this.crowdfundingCustomList = crowdfundingCustomList;
 		this.dynamicsCustomList = dynamicsCustomList;
-		this.storeCustomsList = storeCustomsList;
 		this.subjectHeadList = subjectHeadList;
-	}
-
-	public List<StoreCustom> getStoreCustomsList() {
-		return storeCustomsList;
-	}
-
-	public void setStoreCustomsList(List<StoreCustom> storeCustomsList) {
-		this.storeCustomsList = storeCustomsList;
 	}
 
 	public List<PageData> getCarouselList() {
@@ -125,7 +111,6 @@ public class HomePageData {
 				", secondHandSpecialCustomList=" + secondHandSpecialCustomList +
 				", crowdfundingCustomList=" + crowdfundingCustomList +
 				", dynamicsCustomList=" + dynamicsCustomList +
-				", storeCustomsList=" + storeCustomsList +
 				", subjectHeadList=" + subjectHeadList +
 				'}';
 	}

@@ -72,7 +72,6 @@ public class HomePageController extends BaseController{
 			@RequestParam(value = "sentenceSize", defaultValue = "5") Integer sentenceSize,
 			@RequestParam(value = "commodityCategorySize", defaultValue = "4") Integer commodityCategorySize,
 			@RequestParam(value = "crowdfundinSize", defaultValue = "5")Integer crowdfundinSize,
-			@RequestParam(value = "storeSize", defaultValue = "4")Integer storeSize,
 			@RequestParam(value = "dynamicsSize", defaultValue = "5")Integer dynamicsSize) throws Exception {
 		//五条轮播图
 		List<PageData> carouselList = makercarouselService.selectTop5();
@@ -84,8 +83,6 @@ public class HomePageController extends BaseController{
 		List<CrowdfundingCustom> crowdfundingCustomList = crowdfundingService.findByQueryCondition(new QueryCondition("all", "", "", "DESC", "add_date", 0, crowdfundinSize));
 		//五条动态
 		List<DynamicsCustom> dynamicsCustomList = dynamicsService.findDynamicsByQueryCondition(new QueryCondition("all", "", "", "DESC", "add_date", 0,dynamicsSize));
-		//店铺
-		List<StoreCustom> storeList = storeService.findByQueryCondition(new QueryCondition("all", "", "", "DESC", "registration_date", 0, storeSize));
 		//标题头
 		List<SubjectHead> subjectHeadList = subjectHeadService.selectAll();
 
@@ -95,7 +92,6 @@ public class HomePageController extends BaseController{
 				commoditycCategoryCustomList,
 				crowdfundingCustomList,
 				dynamicsCustomList,
-				storeList,
 				subjectHeadList
 		));
 	}

@@ -188,10 +188,6 @@
                     <td><input name="userId"/></td>
                 </tr>
                 <tr>
-                    <td>店铺id</td>
-                    <td><input name="storeId"/></td>
-                </tr>
-                <tr>
                     <td>商品名称</td>
                     <td><input name="commodityName"/></td>
                 </tr>
@@ -450,10 +446,6 @@
                 <tr>
                     <td>动态数目</td>
                     <td><input type="number" name="dynamicsSize"></td>
-                </tr>
-                <tr>
-                    <td>商店数目</td>
-                    <td><input type="number" name="storeSize"></td>
                 </tr>
             </table>
             <input type="submit" value="请求">

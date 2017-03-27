@@ -33,7 +33,7 @@
         t_sentence.text "text",
         t_sentence.type "type",
         t_sentence.add_user "addUser",
-        t_sentence.add_date "addDate",
+        t_sentence.add_date "addDate"
     </sql>
 
     <!-- 通过 SentenceQueryCondition 查找 Sentence -->

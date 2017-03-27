@@ -32,8 +32,16 @@
 						<div id="zhongxin" style="padding-top: 13px;">
 						<table id="table_report" class="table table-striped table-bordered table-hover">
 							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">推荐标题:</td>
-								<td><input type="text" name="TITLE" id="TITLE" value="${pd.TITLE}" maxlength="255" placeholder="这里输入推荐标题" title="推荐标题" style="width:98%;"/></td>
+								<input type="text" name="edit_type" id="edit_type"
+									   value="${pd.TITLE}" hidden="hidden" />
+								<td style="width:75px;text-align: right;padding-top: 13px;">类型:</td>
+								<td>
+									<select class="chosen-select form-control" name="TITLE" id="TITLE" data-placeholder="请选择推荐标题" style="vertical-align:top;width: 120px;">
+										<option value="火热众筹">火热众筹</option>
+										<option value="二手专题">二手专题</option>
+										<option value="热门动态">热门动态</option>
+									</select>
+								</td>
 							</tr>
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">“更多”文字描述:</td>
@@ -78,6 +86,16 @@
 	<script type="text/javascript" src="static/js/jquery.tips.js"></script>
 		<script type="text/javascript">
 		$(top.hangge());
+
+		$(function() {
+
+			var editType = $("#edit_type").val();
+			if (editType != "" ) {
+				$("#TITLE").val(editType)
+			}
+
+		});
+
 		//保存
 		function save(){
 			if($("#TITLE").val()==""){
