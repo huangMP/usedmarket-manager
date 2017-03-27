@@ -94,7 +94,7 @@
 
     <resultMap id="loadImagesByContentId" type="DynamicsCustom" autoMapping="true">
         <id column="dynamicsId" property="dynamicsId"/>
-        <collection property="images" javaType="ArrayList" ofType="Attachment" autoMapping="true" column="dynamicsId" select="com.usedmarket.dao.AttachmentDao.findByContentId">
+        <collection property="images" javaType="ArrayList" ofType="Attachment" autoMapping="true" column="dynamicsId" select="com.maker.dao.AttachmentDao.findByContentId">
             <id column="attachment_id" property="attachmentId"/>
         </collection>
     </resultMap>

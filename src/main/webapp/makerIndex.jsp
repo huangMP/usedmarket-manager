@@ -307,7 +307,7 @@
 
         <span>----------捐赠物品-----------------------------------</span>
         <h4>条件查找 </h4>
-        <form action="Donation/findByQueryCondition" method="post">
+        <form action="AppDonation/findByQueryCondition" method="post">
             <table>
                 <tr>
                     <td>类型</td>
@@ -466,7 +466,7 @@
 
         <span>-----------推荐/跑马条-----------------------------------</span>
         <h4>查找</h4>
-        <form action="Sentence/select" method="post">
+        <form action="AppSentence/select" method="post">
             <table>
                 <tr>
                     <td>类型</td>
@@ -595,7 +595,7 @@
 
         <span>----------二手分类-二手专题-----------------------------------</span>
         <h4>条件查找 </h4>
-        <form action="CommodityCategory/findByQueryCondition" method="post">
+        <form action="AppCommodityCategory/findByQueryCondition" method="post">
             <table>
                 <tr>
                     <td>类型</td>
