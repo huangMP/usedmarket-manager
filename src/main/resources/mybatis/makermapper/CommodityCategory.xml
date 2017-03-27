@@ -100,7 +100,7 @@
     <select id="findByQueryCondition" resultType="CommodityCategoryCustom" parameterType="QueryCondition">
         SELECT
         <include refid="FieldAlias"></include>
-        FROM t_commodity_category JOIN t_attachment on t_attachment.content_id = <include refid="tableName"/>.commodity_category_id
+        FROM t_commodity_category
 
         WHERE 1=1
         <if test="type != null and type != '' and type != 'all' ">

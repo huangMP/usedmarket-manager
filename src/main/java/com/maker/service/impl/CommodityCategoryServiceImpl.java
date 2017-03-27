@@ -45,6 +45,7 @@ public class CommodityCategoryServiceImpl implements CommodityCategoryService {
     @Override
     public CommodityCategoryCustom findCommodityCategoryCustomByCommodityCategoryId(String commodityCategoryId) {
         CommodityCategoryCustom result = commodityCategoryDao.findCommodityCategoryCustomByCommodityCategoryId(commodityCategoryId);
+
         result = findPictures(result) ;
         return result;
     }
