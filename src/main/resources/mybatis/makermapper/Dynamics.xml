@@ -71,7 +71,7 @@
     <sql id="findDynamicsSql">
         SELECT
         <include refid="FieldAlias"/>
-        FROM <include refid="tableName"/>
+        FROM <include refid="tableName"/> JOIN t_attachment on t_attachment.content_id = <include refid="tableName"/>.dynamics_id
     </sql>
     <!-- 按要求查找 1.校园动态 2.捐赠动态-->
     <select id="findDynamicsByQueryCondition" resultMap="loadImagesByContentId" parameterType="QueryCondition">
