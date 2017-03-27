@@ -26,6 +26,7 @@
         t_subject_head.title "title",
         t_subject_head.add_user "addUser",
         t_subject_head.add_date "addDate",
+        t_subject_head.type "type"
     </sql>
 
     <!-- 字段值 -->

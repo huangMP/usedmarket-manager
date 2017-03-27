@@ -13,7 +13,6 @@
     <sql id="Field">
         commodity_id,
         user_id,
-        store_id,
         commodity_name,
         category,
         price,
@@ -30,7 +29,6 @@
     <sql id="FieldAlias">
         t_commodity.commodity_id "commodityId",
         t_commodity.user_id "userId",
-        t_commodity.store_id "storeId",
         t_commodity.commodity_name "commodityName",
         t_commodity.category "category",
         t_commodity.price "price",
@@ -47,7 +45,6 @@
     <sql id="FieldValue">
         #{commodityId},
         #{userId},
-        #{storeId},
         #{commodityName},
         #{category},
         #{price},

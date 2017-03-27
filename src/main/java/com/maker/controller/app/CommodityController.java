@@ -42,6 +42,7 @@ public class CommodityController extends BaseController{
 	@RequestMapping(value = "/delete")
 	@ResponseBody
 	public HttpResult deleteCommodity(String commodityId) {
+		attachmentService.deleteByContentId(commodityId);
 		return this.getFrequentlyUsedReturnResultByBool(commodityService.deleteByCommodityId(commodityId));
 	}
 
@@ -55,7 +56,6 @@ public class CommodityController extends BaseController{
 	@ResponseBody
 	public HttpResult uploadCommodity(@RequestParam(value = "images") MultipartFile[] images,
 									  String userId,
-									  String storeId,
 									  String commodityName,
 									  String category,
 									  @RequestParam(value = "price", defaultValue = "0") double price,
@@ -66,7 +66,6 @@ public class CommodityController extends BaseController{
 		Commodity commodity = new Commodity(
 				UuidUtil.get32UUID(),
 				userId,
-				storeId,
 				commodityName,
 				category,
 				price,
