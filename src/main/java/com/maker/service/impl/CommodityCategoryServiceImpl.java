@@ -1,6 +1,7 @@
 package com.maker.service.impl;
 
 import com.fh.service.makermanager.picture_used_details.Picture_Used_DetailsManager;
+import com.fh.util.Const;
 import com.fh.util.PageData;
 import com.maker.dao.CommodityCategoryDao;
 import com.maker.dto.CommodityCategoryCustom;
@@ -89,8 +90,8 @@ public class CommodityCategoryServiceImpl implements CommodityCategoryService {
                     e.printStackTrace();
                 }
                 if(pictures.size()>0){
-                    item.setPicturePath(pictures.get(0).getString("PATH"));
-                    item.setNarrowPicturePath(pictures.get(0).getString("PATH"));
+                    item.setPicturePath( Const.FILEPATHIMG + pictures.get(0).getString("PATH"));
+                    item.setNarrowPicturePath( Const.FILEPATHIMG + pictures.get(0).getString("PATH"));
                 }
             }
         }
@@ -110,8 +111,8 @@ public class CommodityCategoryServiceImpl implements CommodityCategoryService {
                 e.printStackTrace();
             }
             if( pictures.size() > 0 ) {
-                commodityCategoryCustom.setPicturePath(pictures.get(0).getString("PATH"));
-                commodityCategoryCustom.setNarrowPicturePath(pictures.get(0).getString("PATH"));
+                commodityCategoryCustom.setPicturePath( Const.FILEPATHIMG + pictures.get(0).getString("PATH"));
+                commodityCategoryCustom.setNarrowPicturePath( Const.FILEPATHIMG + pictures.get(0).getString("PATH"));
             }
         }
         return commodityCategoryCustom;

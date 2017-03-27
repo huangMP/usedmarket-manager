@@ -51,6 +51,7 @@ public class DynamicsCustom extends Dynamics{
         return "DynamicsCustom{" +
                 "username='" + username + '\'' +
                 ", headPortrait='" + headPortrait + '\'' +
+                ", images='" + images.size() + '\'' +
                 "} " + super.toString();
     }
 }
