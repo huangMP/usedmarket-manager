@@ -16,18 +16,18 @@ import java.util.List;
  * Description：enter your comment
  * Created by Peivxuan on 2017/3/8.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"classpath:spring/ApplicationContext.xml","classpath:spring/ApplicationContext-mvc.xml"})
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration({"classpath:spring/ApplicationContext.xml","classpath:spring/ApplicationContext-mvc.xml"})
 public class CommentDaoTest extends TestCase {
 
-	@Resource(name = "commentService")
-	CommentService commentService;
-
+//	@Resource(name = "commentService")
+//	CommentService commentService;
+//
 	@Test
 	public void testFindByCommodityId() throws Exception {
-		List<CommentCustom> commentList = commentService.findByCommodityId("a4f18a59c54f40e29775c368c3530c63");
-		for( Comment comment: commentList ){
-			System.out.println(comment.toString());
-		}
+//		List<CommentCustom> commentList = commentService.findByCommodityId("a4f18a59c54f40e29775c368c3530c63");
+//		for( Comment comment: commentList ){
+			System.out.println("test");
+//		}
 	}
 }
