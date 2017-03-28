@@ -7,6 +7,9 @@ import java.util.Date;
  * decription : 众筹表
  */
 public class Crowdfunding {
+
+
+
     /**
      * 主键
      */

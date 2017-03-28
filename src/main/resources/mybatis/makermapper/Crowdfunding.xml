@@ -126,7 +126,7 @@
     <sql id="findSql">
         SELECT
         <include refid="FieldAlias"/>
-        FROM `t_crowdfunding`
+        FROM `t_crowdfunding` JOIN t_dynamics ON  t_crowdfunding.dynamics_id = t_dynamics.dynamics_id
     </sql>
 
     <!-- 按要求查找 -->
