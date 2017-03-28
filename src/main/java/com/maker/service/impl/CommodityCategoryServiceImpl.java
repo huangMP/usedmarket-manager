@@ -23,6 +23,7 @@ public class CommodityCategoryServiceImpl implements CommodityCategoryService {
 
     @Autowired
     CommodityCategoryDao commodityCategoryDao;
+
     @Resource(name="picture_used_detailsService")
     private Picture_Used_DetailsManager picture_used_detailsService;
 
